@@ -1,28 +1,40 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import colors from 'colors'
+import cookieParser from 'cookie-parser'
+import 'colors'
 
 import {errorHandler, notFound} from './middleware/errorMiddleware.js'
 import {connectDB} from './config/mongoDB.js'
 import userRoutes from './routes/userRoutes.js'
 import itemRoutes from './routes/itemRoutes.js'
-connectDB()
+
 dotenv.config()
 const port = process.env.PORT || 7000
 
+// MongoDB Connection
+connectDB()
+
+// Init express app
 const app = express()
 
+// cross origin requests
 app.use(cors())
-app.use(express.json())
 
-// Error Middleware
-app.use(notFound)
-app.use(errorHandler)
+// cookie parser
+app.use(cookieParser())
+
+// request body parser
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 // Routes
 app.use('/api/users', userRoutes)
 app.use('/api/items', itemRoutes)
+
+// Error Middleware
+app.use(notFound)
+app.use(errorHandler)
 
 // The code snippet below kills the server when => CTRL + C
 process.on('SIGINT', function() {
