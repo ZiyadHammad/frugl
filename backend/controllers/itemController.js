@@ -13,16 +13,14 @@ export const createItem = asyncHandler(async (req, res) => {
     const itemDetails = await scrapeAmazonItem(url);
 
     if (itemDetails) {
-      // Associating the logged in userId to the Item object 
-      itemDetails.userId = req.user._id
+      // Associating the logged in userId to the Item object
+      itemDetails.userId = req.user._id;
 
-      const item = await Items.create(itemDetails) 
+      const item = await Items.create(itemDetails);
       res.status(201).json(item);
     }
   } catch (error) {
-    throw new Error(
-      "Something went wrong when trying to scrape that item from Amazon."
-    );
+    throw new Error(`Error: ${error.message}`);
   }
 });
 
@@ -30,26 +28,90 @@ export const createItem = asyncHandler(async (req, res) => {
 // @route GET /api/items
 // @access Private
 export const getItems = asyncHandler(async (req, res) => {
-  res.json({ message: "Get Items" });
+  try {
+    const items = await Items.find({ userId: req.user._id });
+
+    if (!items) {
+      res.status(404);
+      throw new Error("No Items Found");
+    }
+
+    res.status(200).json(items);
+  } catch (error) {
+    res.status(500);
+    throw new Error(`Error: ${error.message}`);
+  }
 });
 
 // @desc Get Item by Id
 // @route GET /api//Items/:id
 // @access Private
 export const getItemById = asyncHandler(async (req, res) => {
-  res.json({ message: "Get item by id" });
+  try {
+    const item = await Items.findById(req.params.id);
+
+    if (!item) {
+      res.status(404);
+      throw new Error("Item not found");
+    }
+
+    if (item.userId.toString() !== req.user._id.toString()) {
+      res.status(403);
+      throw new Error("Unauthorized access to this item");
+    }
+
+    res.status(200).json({
+      _id: item._id,
+      title: item.title,
+    });
+  } catch (error) {
+    res.status(500);
+    throw new Error(`Error: ${error.message}`);
+  }
+});
+
+// @desc update item by id
+// @route PUT /api//Items/:id
+// @access Private
+export const updateItemTitle = asyncHandler(async (req, res) => {
+  const item = await Items.findById(req.params.id);
+
+  if (!item) {
+    res.status(404);
+    throw new Error(`Item not found.`);
+  }
+
+  item.title = req.body.title || item.title;
+
+  res.status(200).json({
+    message: "Title updated!",
+    title: item.title,
+  });
 });
 
 // @desc delete item by id
 // @route DELETE /api//Items/:id
 // @access Private
 export const deleteItem = asyncHandler(async (req, res) => {
-  res.json({ message: "delete item by id" });
-});
+  const itemId = req.params.id;
+  
+  const item = await Items.findById(itemId);
 
-// @desc update item by id
-// @route PUT /api//Items/:id
-// @access Private
-export const updateItem = asyncHandler(async (req, res) => {
-  res.json({ message: "update item by id" });
+  if (!item) {
+    res.status(404);
+    throw new Error(`Item not found.`);
+  }
+
+  if (item.userId.toString() !== req.user._id.toString()) {
+    res.status(403);
+    throw new Error("Unauthorized access to this item");
+  }
+
+  await Items.findByIdAndDelete(itemId);
+
+  res.status(200).json({
+    message: "Item deleted successfully.",
+    title: `${item.title} has been deleted`
+   });
+
 });
