@@ -6,6 +6,7 @@ import colors from 'colors'
 import {errorHandler, notFound} from './middleware/errorMiddleware.js'
 import {connectDB} from './config/mongoDB.js'
 import userRoutes from './routes/userRoutes.js'
+import itemRoutes from './routes/itemRoutes.js'
 connectDB()
 dotenv.config()
 const port = process.env.PORT || 7000
