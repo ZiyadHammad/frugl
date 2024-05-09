@@ -22,6 +22,7 @@ app.use(errorHandler)
 
 // Routes
 app.use('/api/users', userRoutes)
+app.use('/api/items', itemRoutes)
 
 // The code snippet below kills the server when => CTRL + C
 process.on('SIGINT', function() {
