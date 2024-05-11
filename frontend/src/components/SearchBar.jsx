@@ -15,8 +15,10 @@ const SearchBar = () => {
 
   return (
     <>
-      <form className="flex flex-wrap gap-4 mt-12">
+      <div className="flex flex-wrap gap-4 mt-12">
         <input
+          id="url-input"
+          name="url-input"
           className="flex-1 min-w-[200px] w-full p-3 rounded-lg 
       shadow-xs border border-gray-300 text-base text-gray-500 focus:outline-none"
           type="url"
@@ -31,7 +33,7 @@ const SearchBar = () => {
         >
           Go!
         </button>
-      </form>
+      </div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <TransitionChild
