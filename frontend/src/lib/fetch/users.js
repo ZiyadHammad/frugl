@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { loginApi } from '../api/users'
+import { getUserApi, loginApi, registerApi } from '../api/users'
 
 export const loginUser = async (formData) => {
   try {
@@ -13,7 +12,7 @@ export const loginUser = async (formData) => {
 
 export const registerUser = async (formData) => {
   try {
-    const response = await loginApi.post('/register', formData)
+    const response = await registerApi.post('/register', formData)
     console.log(response)
     return response
   } catch (error) {
@@ -23,7 +22,7 @@ export const registerUser = async (formData) => {
 
 export const getUser = async (formData) => {
   try {
-    const response = await loginApi.post('/profile', formData)
+    const response = await getUserApi.post('/profile', formData)
     console.log(response)
     return response
   } catch (error) {
