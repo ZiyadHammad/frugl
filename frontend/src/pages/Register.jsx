@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { registerUser } from "../lib/fetch/users";
+
 const Register = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -11,6 +13,15 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await registerUser(formData);
+
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error.message);
+    }
     console.log(formData);
   };
 
