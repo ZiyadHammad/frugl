@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import About from '../components/About'
 
 const Home = () => {
+  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

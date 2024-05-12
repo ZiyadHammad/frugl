@@ -45,6 +45,7 @@ const Navbar = () => {
   return (
     <header className="w-full">
       <nav className="flex justify-between items-center px-6 py-8 md:px-20">
+        
         <NavLink className="flex items-center gap-2" to="/">
           <img className="object-contain h-10 w-10" src="/icon.svg" alt="company icon" />
           <div className="text-primary font-bold text-[21px] font-spaceGrotesk">FrugL</div>

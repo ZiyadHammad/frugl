@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
+import { loginUser } from "../lib/fetch/users";
 
 const Login = () => {
+  
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,14 +16,14 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await registerUser(formData);
+      const response = await loginUser(formData);
 
-      console.log(response);
-      return response;
+      if (response.status === 200) {
+        navigate("/profile");
+      }
     } catch (error) {
-      console.log(error.message);
+      throw new Error(error.message);
     }
-    console.log(formData);
   };
 
   const handleChange = (e) => {

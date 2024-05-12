@@ -2,10 +2,14 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 import { registerUser } from "../lib/fetch/users";
 
 const Register = () => {
+
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -19,12 +23,13 @@ const Register = () => {
     try {
       const response = await registerUser(formData);
 
-      console.log(response);
-      return response;
+      if (response.status === 201) {
+        navigate('/profile')
+      } 
+      
     } catch (error) {
-      console.log(error.message);
+      throw new Error(error.message)
     }
-    console.log(formData);
   };
 
   const handleChange = (e) => {
@@ -37,7 +42,9 @@ const Register = () => {
 
   return (
     <>
+      
       <Navbar />
+
       <div className="flex justify-center items-center py-20">
         <div className="flex flex-col justify-center items-center">
           <img
@@ -159,6 +166,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      
     </>
   );
 };

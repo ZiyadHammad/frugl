@@ -31,15 +31,15 @@ export const register = asyncHandler(async (req, res) => {
       email: user.email,
     });
   } else {
-    res.status(400);
-    throw new Error("Invalid user data");
+    res.status(500);
+    throw new Error("Internal Error");
   }
 });
 
-// @desc Login/Auth user/setToken
+// @desc Login user/setToken
 // @route POST /api/users/login
 // @access Public
-export const auth = asyncHandler(async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -56,14 +56,15 @@ export const auth = asyncHandler(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     genToken(res, user._id);
-    res.status(201).json({
+    res.status(200).json({
+      message: "Logged in Succeesfully.",
       _id: user._id,
       name: user.name,
       email: user.email,
     });
   } else {
     res.status(401);
-    throw new Error("Invalid credentials");
+    throw new Error("Password invalid");
   }
 });
 
@@ -84,7 +85,13 @@ export const logout = asyncHandler(async (req, res) => {
 // @route GET /api/users/profile
 // @access Private
 export const getUser = asyncHandler(async (req, res) => {
+  if (!req.user._id) {
+    res.status(404);
+    throw new Error(`User is not authenticated. ${error.message}`);
+  }
+
   const user = {
+    message: 'User is authenticated',
     id: req.user._id,
     name: `${req.user.firstName} ${req.user.lastName}`,
     email: req.user.email,
@@ -108,7 +115,8 @@ export const updateUser = asyncHandler(async (req, res) => {
 
     const updatedUser = await user.save(user);
     res.status(200).json({
-      _id: updateUser._id,
+      message: "Success",
+      _id: updatedUser._id,
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
       email: updatedUser.email,

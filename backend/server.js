@@ -19,7 +19,10 @@ connectDB()
 const app = express()
 
 // cross origin requests
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true // Allow credentials (cookies)
+}))
 
 // cookie parser
 app.use(cookieParser())
