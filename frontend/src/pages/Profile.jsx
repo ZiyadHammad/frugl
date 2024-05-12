@@ -1,17 +1,24 @@
-import { useEffect } from 'react'
+import { useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 
-import {getUser} from '../lib/fetch/users'
+import Navbar from "../components/Navbar";
+
+import { getUser, logoutUser } from "../lib/fetch/users";
+import { getItems, createItem } from "../lib/fetch/items";
 
 const Profile = () => {
-
-  useEffect( () => {
-    
-  }, [])
-
+  const [user] = useOutletContext();
+  console.log(user);
 
   return (
-    <div>Profile</div>
-  )
-}
+    <>
+      <Navbar />
 
-export default Profile
+      <div className="">
+        Profile Page
+      </div>
+    </>
+  );
+};
+
+export default Profile;

@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const MobileMenu = () => {
+ 
   const [menuOpen, setMenuOpen] = useState(false);
 
   return <>

@@ -91,6 +91,7 @@ export const getUser = asyncHandler(async (req, res) => {
   }
 
   const user = {
+    auth: true,
     message: 'User is authenticated',
     id: req.user._id,
     name: `${req.user.firstName} ${req.user.lastName}`,
