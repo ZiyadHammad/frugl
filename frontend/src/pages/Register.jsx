@@ -24,7 +24,7 @@ const Register = () => {
       const response = await registerUser(formData);
 
       if (response.status === 201) {
-        navigate('/profile')
+        navigate('/dashboard')
       } 
       
     } catch (error) {

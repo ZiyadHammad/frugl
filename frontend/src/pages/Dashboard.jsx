@@ -6,19 +6,19 @@ import Navbar from "../components/Navbar";
 import { getUser, logoutUser } from "../lib/fetch/users";
 import { getItems, createItem } from "../lib/fetch/items";
 
-const Profile = () => {
+const Dashboard = () => {
   const [user] = useOutletContext();
-  console.log(user);
+  // console.log(user);
 
   return (
     <>
       <Navbar />
 
       <div className="">
-        Profile Page
+        Dashboard Page
       </div>
     </>
   );
 };
 
-export default Profile;
+export default Dashboard;

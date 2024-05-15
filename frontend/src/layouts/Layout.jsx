@@ -1,20 +1,30 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import { getUser } from "../lib/fetch/users";
+import Loader from '../components/Loader'
 
 const Layout = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkLoggedInUser = async () => {
-      const response = await getUser();
-      console.log(response);
-      setUser(response);
+      try {
+        const response = await getUser();
+        setUser(response);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     checkLoggedInUser();
   }, []);
+
+  if (loading) {
+    return <Loader />
+  }
 
   return (
     <div className="w-full min-h-screen bg-theme">

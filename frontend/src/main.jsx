@@ -8,7 +8,7 @@ import Layout from './layouts/Layout'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Profile from './pages/Profile'
+import Dashboard from './pages/Dashboard'
 
 const router = createBrowserRouter([
   {
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
-        path: 'profile',
-        element: <Profile />
+        path: 'dashboard',
+        element: <Dashboard />
       }
     ]
   }

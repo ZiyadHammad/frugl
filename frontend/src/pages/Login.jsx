@@ -19,7 +19,7 @@ const Login = () => {
       const response = await loginUser(formData);
 
       if (response.status === 200) {
-        navigate("/profile");
+        navigate("/dashboard");
       }
     } catch (error) {
       throw new Error(error.message);
