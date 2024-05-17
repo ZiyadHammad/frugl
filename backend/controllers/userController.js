@@ -78,6 +78,8 @@ export const logout = asyncHandler(async (req, res) => {
     expires: new Date(0), // expires right away
   });
 
+  console.log(`User ID: logged out successfully`)
+
   res.status(200).json({ message: "Logged out successfully." });
 });
 

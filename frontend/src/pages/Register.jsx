@@ -41,10 +41,6 @@ const Register = () => {
   };
 
   return (
-    <>
-      
-      <Navbar />
-
       <div className="flex justify-center items-center py-20">
         <div className="flex flex-col justify-center items-center">
           <img
@@ -166,8 +162,6 @@ const Register = () => {
           </div>
         </div>
       </div>
-      
-    </>
   );
 };
 

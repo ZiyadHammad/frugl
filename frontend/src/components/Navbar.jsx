@@ -172,7 +172,7 @@ const Logo = ({ user }) => {
         </div>
       </NavLink>
 
-      {user && (
+      {user.auth && (
         <NavLink
           className="sm:hidden md:flex px-5 py-3 transition duration-400 ease-in-out hover:shadow-none hover:scale-95"
           to="/dashboard"
@@ -187,9 +187,9 @@ const Logo = ({ user }) => {
 };
 
 // Main Navbar Component
-const Navbar = () => {
+const Navbar = ({user, handleSignOut}) => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, handleSignOut] = useOutletContext();
+
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);

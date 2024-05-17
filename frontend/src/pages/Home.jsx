@@ -18,18 +18,10 @@ const Home = () => {
   }, []);
 
   return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
         <>
-          <Navbar />
           <Hero />
-
          <About />
         </>
-      )}
-    </>
   );
 };
 

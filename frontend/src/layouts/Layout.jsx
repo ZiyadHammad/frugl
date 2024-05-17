@@ -1,13 +1,17 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUser, logoutUser } from "../lib/fetch/users";
+
+import Navbar from "../components/Navbar";
 import Loader from '../components/Loader'
-import { useNavigate } from "react-router-dom";
 
 const Layout = () => {
   const navigate = useNavigate()
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    auth: false
+  });
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const checkLoggedInUser = async () => {
@@ -15,7 +19,7 @@ const Layout = () => {
         const response = await getUser();
         setUser(response);
       } catch (error) {
-        console.error("Failed to fetch user data:", error);
+        console.log('User is not logged in')
       } finally {
         setLoading(false);
       }
@@ -42,6 +46,7 @@ const Layout = () => {
   return (
     <div className="w-full min-h-screen bg-theme">
       <div className="container max-w-10xl">
+        <Navbar user={user} handleSignOut={handleSignOut} />
         <Outlet context={[user, setUser, handleSignOut]} />
       </div>
     </div>

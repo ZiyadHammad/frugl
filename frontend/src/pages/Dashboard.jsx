@@ -11,13 +11,9 @@ const Dashboard = () => {
   // console.log(user);
 
   return (
-    <>
-      <Navbar />
-
       <div className="">
         Dashboard Page
       </div>
-    </>
   );
 };
 
