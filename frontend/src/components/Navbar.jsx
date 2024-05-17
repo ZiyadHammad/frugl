@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { useOutletContext } from "react-router-dom";
 
 // Component for the Menu Toggle Icon
 const MenuToggleIcon = ({ menuOpen, toggleMenu }) => {

@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Navbar from "../components/Navbar";
 import { loginUser } from "../lib/fetch/users";
 
 const Login = () => {
+  
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ const Login = () => {
       const response = await loginUser(formData);
 
       if (response.status === 200) {
+        setUser(response.data)
         navigate("/dashboard");
       }
     } catch (error) {
