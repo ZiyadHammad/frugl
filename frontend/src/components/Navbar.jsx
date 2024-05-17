@@ -18,7 +18,7 @@ const MenuToggleIcon = ({ menuOpen, toggleMenu }) => {
 };
 
 // Component for the Mobile Menu
-const MobileMenu = ({ menuOpen, user }) => {
+const MobileMenu = ({ menuOpen, user, handleSignOut }) => {
   return (
     <AnimatePresence>
       {menuOpen && (
@@ -31,7 +31,38 @@ const MobileMenu = ({ menuOpen, user }) => {
         >
           <div className="flex flex-col pl-8 pt-8 gap-2">
             {user.auth ? (
-              <div className="text-body text-xl z-11">Hello, {user.name}</div>
+              <>
+                <NavLink
+                  to="/dashboard"
+                  className="flex items-center gap-2  text-md text-gray-700 hover:bg-gray-100"
+                >
+                  <img
+                    src="/assets/icons/dashboard.svg"
+                    alt="dashboard"
+                    className="h-5"
+                  />
+                  <p>Dashboard</p>
+                </NavLink>
+                <NavLink
+                  to="/settings"
+                  className="flex items-center gap-2  text-md text-gray-700 hover:bg-gray-100"
+                >
+                  <img
+                    src="/assets/icons/settings.svg"
+                    alt="settings"
+                    className="h-5"
+                  />
+                  <p>Settings</p>
+                </NavLink>
+                <NavLink className="flex items-center gap-2  text-md text-gray-700 hover:bg-gray-100">
+                  <img
+                    src="/assets/icons/sign-out.svg"
+                    alt="sign out"
+                    className="h-5"
+                  />
+                  <button onClick={handleSignOut}>Sign Out</button>
+                </NavLink>
+              </>
             ) : (
               <>
                 <NavLink to="/login" className="text-body text-xl z-11">
@@ -50,22 +81,11 @@ const MobileMenu = ({ menuOpen, user }) => {
 };
 
 // Component for the Desktop Navigation Links
-const DesktopNavLinks = ({ user, toggleMenu, menuOpen }) => {
+const DesktopNavLinks = ({ user, toggleMenu, menuOpen, handleSignOut }) => {
   return (
     <>
       {user.auth ? (
-        //   <NavLink
-        //   className="bg-white px-5 py-3 shadow-custom rounded-10 transition duration-400 ease-in-out hover:shadow-none hover:scale-95"
-        //   to="/login"
-        // >
-        //   <div className="font-spaceGrotesk text-primary font-6 text-[14px]">
-        //     Dashboard
-        //   </div>
-        // </NavLink>
-
-        <div className="relative">
-
-          
+        <div className=" sm:hidden md:block relative">
           <img
             src={user.avatar || "/assets/icons/user.svg"}
             alt="User Avatar"
@@ -75,7 +95,6 @@ const DesktopNavLinks = ({ user, toggleMenu, menuOpen }) => {
           {menuOpen && (
             <div className="absolute right-0 mt-4 py-4  w-48 bg-white rounded-md shadow-lg z-20 flex flex-col ">
               <div className="flex flex-col justify-center items-center">
-                
                 <img
                   src={user.avatar || "/assets/icons/user.svg"}
                   alt="User Avatar"
@@ -108,15 +127,7 @@ const DesktopNavLinks = ({ user, toggleMenu, menuOpen }) => {
                     alt="settings"
                     className="h-5"
                   />
-                  <button
-                    onClick={() => {
-                      // Handle sign out
-                      console.log("Sign out");
-                    }}
-                    className=""
-                  >
-                    Sign Out
-                  </button>
+                  <button onClick={handleSignOut}>Sign Out</button>
                 </NavLink>
               </div>
             </div>
@@ -147,26 +158,38 @@ const DesktopNavLinks = ({ user, toggleMenu, menuOpen }) => {
   );
 };
 
-const Logo = () => {
+const Logo = ({ user }) => {
   return (
-    <NavLink className="flex items-center gap-2" to="/">
-      <img
-        className="object-contain h-10 w-10"
-        src="/icon.svg"
-        alt="company icon"
-      />
+    <div className="flex items-center gap-6">
+      <NavLink className="flex items-center justify-center gap-2" to="/">
+        <img
+          className="object-contain h-10 w-10"
+          src="/icon.svg"
+          alt="company icon"
+        />
+        <div className="text-primary font-bold text-3xl font-spaceGrotesk">
+          FrugL
+        </div>
+      </NavLink>
 
-      <div className="text-primary font-bold text-[21px] font-spaceGrotesk">
-        FrugL
-      </div>
-    </NavLink>
+      {user && (
+        <NavLink
+          className="sm:hidden md:flex px-5 py-3 transition duration-400 ease-in-out hover:shadow-none hover:scale-95"
+          to="/dashboard"
+        >
+          <div className="font-spaceGrotesk text-primary font-semibold text-[14px]">
+            Dashboard
+          </div>
+        </NavLink>
+      )}
+    </div>
   );
 };
 
 // Main Navbar Component
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user] = useOutletContext();
+  const [user, handleSignOut] = useOutletContext();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -175,17 +198,22 @@ const Navbar = () => {
   return (
     <header className="w-full">
       <nav className="flex justify-between items-center px-6 py-8 md:px-20">
-        <Logo />
+        <Logo user={user} />
 
         <DesktopNavLinks
           user={user}
           menuOpen={menuOpen}
           toggleMenu={toggleMenu}
+          handleSignOut={handleSignOut}
         />
 
         <MenuToggleIcon menuOpen={menuOpen} toggleMenu={toggleMenu} />
 
-        <MobileMenu user={user} menuOpen={menuOpen} />
+        <MobileMenu
+          user={user}
+          menuOpen={menuOpen}
+          handleSignOut={handleSignOut}
+        />
       </nav>
     </header>
   );
