@@ -1,28 +1,37 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { loginUser } from "../lib/fetch/users";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
+import { useLoginMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
+import Loader from "../components/Loader";
 
 const Login = () => {
-  
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
+  const { userInfo } = useSelector((state) => state.auth);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/dashboard");
+    }
+  }, [navigate, userInfo]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await loginUser(formData);
-
-      if (response.status === 200) {
-        setUser(response.data)
-        navigate("/dashboard");
-      }
-    } catch (error) {
-      throw new Error(error.message);
+      const response = await login(formData).unwrap();
+      dispatch(setCredentials({ ...response }));
+      navigate("/dashboard");
+    } catch (err) {
+      toast(err || err.error);
     }
   };
 
@@ -33,6 +42,10 @@ const Login = () => {
       [name]: value,
     }));
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex justify-center items-center py-28">
@@ -102,7 +115,7 @@ const Login = () => {
                   type="submit"
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Sign up
+                  Log in
                 </button>
               </div>
             </form>

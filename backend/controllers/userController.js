@@ -57,7 +57,7 @@ export const login = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     genToken(res, user._id);
     res.status(200).json({
-      message: "Logged in Succeesfully.",
+      name: `${user.firstName} ${user.lastName}`,
       _id: user._id,
       name: user.name,
       email: user.email,

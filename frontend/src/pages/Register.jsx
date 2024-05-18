@@ -1,15 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
-
-import { registerUser } from "../lib/fetch/users";
-
 const Register = () => {
-
   const navigate = useNavigate()
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,11 +14,9 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await registerUser(formData);
+      // const response = await 
 
-      if (response.status === 201) {
-        navigate('/dashboard')
-      } 
+    
       
     } catch (error) {
       throw new Error(error.message)

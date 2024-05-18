@@ -1,6 +1,10 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
+
+import { useLogoutMutation } from "../slices/usersApiSlice";
+import { clearCredentials } from "../slices/authSlice";
 
 // Component for the Menu Toggle Icon
 const MenuToggleIcon = ({ menuOpen, toggleMenu }) => {
@@ -17,7 +21,7 @@ const MenuToggleIcon = ({ menuOpen, toggleMenu }) => {
 };
 
 // Component for the Mobile Menu
-const MobileMenu = ({ menuOpen, user, handleSignOut }) => {
+const MobileMenu = ({ menuOpen, userInfo, handleSignOut }) => {
   return (
     <AnimatePresence>
       {menuOpen && (
@@ -29,7 +33,7 @@ const MobileMenu = ({ menuOpen, user, handleSignOut }) => {
           transition={{ duration: 0.5 }}
         >
           <div className="flex flex-col pl-8 pt-8 gap-2">
-            {user.auth ? (
+            {userInfo ? (
               <>
                 <NavLink
                   to="/dashboard"
@@ -80,13 +84,13 @@ const MobileMenu = ({ menuOpen, user, handleSignOut }) => {
 };
 
 // Component for the Desktop Navigation Links
-const DesktopNavLinks = ({ user, toggleMenu, menuOpen, handleSignOut }) => {
+const DesktopNavLinks = ({ toggleMenu, menuOpen, userInfo, handleSignOut }) => {
   return (
     <>
-      {user.auth ? (
+      {userInfo ? (
         <div className=" sm:hidden md:block relative">
           <img
-            src={user.avatar || "/assets/icons/user.svg"}
+            src={userInfo?.avatar || "/assets/icons/user.svg"}
             alt="User Avatar"
             className="w-10 h-10 rounded-full cursor-pointer"
             onClick={toggleMenu}
@@ -95,13 +99,13 @@ const DesktopNavLinks = ({ user, toggleMenu, menuOpen, handleSignOut }) => {
             <div className="absolute right-0 mt-4 py-4  w-48 bg-white rounded-md shadow-lg z-20 flex flex-col ">
               <div className="flex flex-col justify-center items-center">
                 <img
-                  src={user.avatar || "/assets/icons/user.svg"}
+                  src={userInfo?.avatar || "/assets/icons/user.svg"}
                   alt="User Avatar"
                   className="w-10 h-10 rounded-full"
                 />
                 <div className="text-center pt-4 gap-1">
-                  <p className="text-sm text-gray-700">{user.name}</p>
-                  <p className="text-sm text-gray-500">{user.email}</p>
+                  <p className="text-sm text-gray-700">{userInfo.name}</p>
+                  <p className="text-sm text-gray-500">{userInfo.email}</p>
                 </div>
               </div>
 
@@ -126,7 +130,7 @@ const DesktopNavLinks = ({ user, toggleMenu, menuOpen, handleSignOut }) => {
                     alt="settings"
                     className="h-5"
                   />
-                  <button onClick={handleSignOut}>Sign Out</button>
+                  <button onClick={handleSignOut} >Sign Out</button>
                 </NavLink>
               </div>
             </div>
@@ -157,7 +161,7 @@ const DesktopNavLinks = ({ user, toggleMenu, menuOpen, handleSignOut }) => {
   );
 };
 
-const Logo = ({ user }) => {
+const Logo = ({ userInfo }) => {
   return (
     <div className="flex items-center gap-6">
       <NavLink className="flex items-center justify-center gap-2" to="/">
@@ -171,7 +175,7 @@ const Logo = ({ user }) => {
         </div>
       </NavLink>
 
-      {user.auth && (
+      {userInfo && (
         <NavLink
           className="sm:hidden md:flex px-5 py-3 transition duration-400 ease-in-out hover:shadow-none hover:scale-95"
           to="/dashboard"
@@ -186,21 +190,34 @@ const Logo = ({ user }) => {
 };
 
 // Main Navbar Component
-const Navbar = ({user, handleSignOut}) => {
+const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [logout] = useLogoutMutation()
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleSignOut = async () => {
+      try {
+        await logout().unwrap()
+        dispatch(clearCredentials())
+        navigate('/')
+      } catch (err) {
+        toast(err.error)
+      }
+  }
+
   return (
     <header className="w-full">
       <nav className="flex justify-between items-center px-6 py-8 md:px-20">
-        <Logo user={user} />
+        <Logo userInfo={userInfo} />
 
         <DesktopNavLinks
-          user={user}
+          userInfo={userInfo}
           menuOpen={menuOpen}
           toggleMenu={toggleMenu}
           handleSignOut={handleSignOut}
@@ -208,11 +225,7 @@ const Navbar = ({user, handleSignOut}) => {
 
         <MenuToggleIcon menuOpen={menuOpen} toggleMenu={toggleMenu} />
 
-        <MobileMenu
-          user={user}
-          menuOpen={menuOpen}
-          handleSignOut={handleSignOut}
-        />
+        <MobileMenu userInfo={userInfo} menuOpen={menuOpen} handleSignOut={handleSignOut} />
       </nav>
     </header>
   );
