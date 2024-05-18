@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {useUpdateUserMutation} from '../slices/usersApiSlice'
 
 const Settings = () => {
   const [formData, setFormData] = useState({});

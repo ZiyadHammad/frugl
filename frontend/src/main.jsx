@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import PrivateRoute from "./utils/PrivateRoute.jsx";
 
 import "./index.css";
 
@@ -32,13 +33,19 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "profile",
-        element: <Profile />,
-      },
-      {
-        path: "settings",
-        element: <Settings />,
-      },
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "settings",
+            element: <Settings />,
+          },
+        ]
+      }
+      
     ],
   },
 ]);
