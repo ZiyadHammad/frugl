@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Checkbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
-import { useUpdateUserMutation } from "../slices/usersApiSlice";
+import { useUpdateUserMutation, useDeleteUserMutation } from "../slices/usersApiSlice";
 
 const Settings = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -113,7 +113,7 @@ const Settings = () => {
                   </label>
                 </div>
               </div>
-
+              
               <div className="flex items-center gap-4">
                 <h2 className="flex items-center text-lg mb-1 md:mb-0 md:max-h-11">
                   Your Password
@@ -191,6 +191,8 @@ const Settings = () => {
                   Save
                 </button>
               </div>
+
+              <h3 className="text-primary font-spaceGrotesk" >If you would like to delete your account, <span className="text-secondary font-bold" onClick={() => {}} >click here</span></h3>
             </form>
           </div>
         </div>

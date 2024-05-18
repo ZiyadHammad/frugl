@@ -88,13 +88,11 @@ export const logout = asyncHandler(async (req, res) => {
 // @access Private
 export const getUser = asyncHandler(async (req, res) => {
   if (!req.user._id) {
-    res.status(404);
+    res.status(401);
     throw new Error(`User is not authenticated. ${error.message}`);
   }
 
   const user = {
-    auth: true,
-    message: 'User is authenticated',
     id: req.user._id,
     name: `${req.user.firstName} ${req.user.lastName}`,
     email: req.user.email,
@@ -124,6 +122,25 @@ export const updateUser = asyncHandler(async (req, res) => {
       lastName: updatedUser.lastName,
       email: updatedUser.email,
     });
+  } else {
+    res.status(404).json({ message: "User not found" });
+  }
+});
+
+// @desc Delete a user
+// @route DELETE /api/users/profile
+// @access Private
+export const deleteUser = asyncHandler(async (req, res) => {
+  if (!req.user._id) {
+    res.status(401);
+    throw new Error(`User is not authenticated. ${error.message}`);
+  }
+
+  // Find user by ID and delete it
+  const user = await Users.findByIdAndDelete(req.user._id);
+
+  if (user) {
+    res.status(200).json({ message: "User deleted successfully" });
   } else {
     res.status(404).json({ message: "User not found" });
   }

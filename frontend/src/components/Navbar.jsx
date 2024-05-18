@@ -191,7 +191,7 @@ const Logo = ({ userInfo }) => {
           className="sm:hidden md:flex items-center justify-center px-10 py-3 transition duration-400 ease-in-out hover:shadow-none hover:scale-95"
           to="/profile"
         >
-          <div className="font-carlito text-primary font-semibold text-[16px]">
+          <div className="font-spaceGrotesk text-primary font-semibold text-[16px]">
             Profile
           </div>
         </NavLink>
