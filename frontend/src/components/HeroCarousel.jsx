@@ -29,7 +29,7 @@ const HeroCarousel = () => {
           key={image.alt}
           src={image.url}
           alt={image.alt}
-          className="object-contain"
+          className="object-contain sm:max-h-120 sm:max-w-60 md:max-w-none md:max-h-none"
         />
       ))}
       </Carousel>
@@ -37,7 +37,7 @@ const HeroCarousel = () => {
       <img
         src='/assets/icons/hand-drawn-arrow.svg'
         alt="arrow"
-        className="hidden xl:block absolute bottom-0 -left-[15%] z-0 min-h-60 min-w-60"
+        className="hidden xl:block absolute -bottom-5 -left-[15%] z-0 min-h-60 min-w-60"
       />
       </div>
   );

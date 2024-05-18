@@ -27,7 +27,7 @@ export const register = asyncHandler(async (req, res) => {
     genToken(res, user._id);
     res.status(201).json({
       _id: user._id,
-      name: user.name,
+      name: `${user.firstName} ${user.lastName}`,
       email: user.email,
     });
   } else {

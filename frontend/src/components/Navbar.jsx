@@ -26,7 +26,7 @@ const MobileMenu = ({ menuOpen, userInfo, handleSignOut }) => {
     <AnimatePresence>
       {menuOpen && (
         <motion.div
-          className="md:hidden absolute top-24 right-0 w-full h-full bg-theme shadow-lg z-10"
+          className="md:hidden absolute top-14 right-0 w-full h-[100vh] bg-theme shadow-lg z-50"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -36,15 +36,15 @@ const MobileMenu = ({ menuOpen, userInfo, handleSignOut }) => {
             {userInfo ? (
               <>
                 <NavLink
-                  to="/dashboard"
+                  to="/profile"
                   className="flex items-center gap-2  text-md text-gray-700 hover:bg-gray-100"
                 >
                   <img
                     src="/assets/icons/dashboard.svg"
-                    alt="dashboard"
+                    alt="Profile"
                     className="h-5"
                   />
-                  <p>Dashboard</p>
+                  <p>Profile</p>
                 </NavLink>
                 <NavLink
                   to="/settings"
@@ -112,6 +112,17 @@ const DesktopNavLinks = ({ toggleMenu, menuOpen, userInfo, handleSignOut }) => {
               <div className="border-t border-black-100"></div>
 
               <div className="py-1 flex flex-col items-start justify-start gap-2 pt-4 px-4">
+              <NavLink
+                  to="/profile"
+                  className="flex items-center gap-2  text-md text-gray-700 hover:bg-gray-100"
+                >
+                  <img
+                    src="/assets/icons/dashboard.svg"
+                    alt="profile"
+                    className="h-5"
+                  />
+                  <p>Profile</p>
+                </NavLink>
                 <NavLink
                   to="/settings"
                   className="flex items-center gap-2  text-md text-gray-700 hover:bg-gray-100"
@@ -170,18 +181,18 @@ const Logo = ({ userInfo }) => {
           src="/icon.svg"
           alt="company icon"
         />
-        <div className="text-primary font-bold text-3xl font-spaceGrotesk">
+        <div className="text-primary font-bold text-2xl font-spaceGrotesk">
           FrugL
         </div>
       </NavLink>
 
       {userInfo && (
         <NavLink
-          className="sm:hidden md:flex px-5 py-3 transition duration-400 ease-in-out hover:shadow-none hover:scale-95"
-          to="/dashboard"
+          className="sm:hidden md:flex items-center justify-center px-10 py-3 transition duration-400 ease-in-out hover:shadow-none hover:scale-95"
+          to="/profile"
         >
-          <div className="font-spaceGrotesk text-primary font-semibold text-[14px]">
-            Dashboard
+          <div className="font-carlito text-primary font-semibold text-[16px]">
+            Profile
           </div>
         </NavLink>
       )}
@@ -212,8 +223,8 @@ const Navbar = () => {
   }
 
   return (
-    <header className="w-full">
-      <nav className="flex justify-between items-center px-6 py-8 md:px-20">
+    <header className="w-full h-[60px] bg-white shadow-custom-shadow relative z-10">
+      <nav className="flex max-w-10xl h-full justify-between items-center mx-auto px-6 md:px-20">
         <Logo userInfo={userInfo} />
 
         <DesktopNavLinks
@@ -224,7 +235,6 @@ const Navbar = () => {
         />
 
         <MenuToggleIcon menuOpen={menuOpen} toggleMenu={toggleMenu} />
-
         <MobileMenu userInfo={userInfo} menuOpen={menuOpen} handleSignOut={handleSignOut} />
       </nav>
     </header>

@@ -19,7 +19,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/dashboard");
+      navigate("/profile");
     }
   }, [navigate, userInfo]);
 
@@ -29,7 +29,7 @@ const Login = () => {
     try {
       const response = await login(formData).unwrap();
       dispatch(setCredentials({ ...response }));
-      navigate("/dashboard");
+      navigate("/profile");
     } catch (err) {
       toast(err || err.error);
     }

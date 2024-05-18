@@ -9,7 +9,8 @@ import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 
 import "./index.css";
 
@@ -31,8 +32,12 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "dashboard",
-        element: <Dashboard />,
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "settings",
+        element: <Settings />,
       },
     ],
   },

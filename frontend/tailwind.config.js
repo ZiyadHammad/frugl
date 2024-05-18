@@ -35,12 +35,13 @@ export default {
         "7": "700",
       },
       maxWidth: {
-        "10xl": "1400px",
+        "10xl": "1300px",
       },
       boxShadow: {
         'custom': "0 1px 0 .5px #f9f9fb ,0 4px 12px 0 rgba(34,33,81,.12)",
         "custom-1": "0 1px 0 1px #222151,0 8px 12px 0 rgba(34,33,81,.25)",
         "custom-2": "0 1px 0 1px #6327d3,0 8px 12px rgba(34,33,81,.25)",
+        'custom-shadow': '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)',
       },
       borderRadius: {
         "10": "10px",
