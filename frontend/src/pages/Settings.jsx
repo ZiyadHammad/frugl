@@ -15,7 +15,6 @@ const Settings = () => {
     password: "",
     confirmPassword: "",
   });
-  const handleSubmit = () => {};
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +23,9 @@ const Settings = () => {
       [name]: value,
     }));
   };
+
+  const handleSubmit = () => {};
+
 
   return (
     <>
