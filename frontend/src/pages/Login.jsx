@@ -31,7 +31,7 @@ const Login = () => {
       dispatch(setCredentials({ ...response }));
       navigate("/profile");
     } catch (err) {
-      toast(err || err.error);
+      toast(err.data.message)
     }
   };
 
