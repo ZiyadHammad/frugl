@@ -1,31 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Checkbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
+import { toast } from "react-toastify";
 
 import Modal from "../components/Modal";
 import {
   useUpdateUserMutation,
   useDeleteUserMutation,
 } from "../slices/usersApiSlice";
-import {clearCredentials} from '../slices/authSlice'
+import { clearCredentials } from "../slices/authSlice";
 
 const Settings = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [enabled, setEnabled] = useState(true);
-  const [inputValue, setInputValue] = useState('');
+  const [isBlurred, setIsBlurred] = useState(false);
+  const [inputValue, setInputValue] = useState("");
   const [formData, setFormData] = useState({
     firstName: userInfo.name.split(" ")[0] || "",
     lastName: userInfo.name.split(" ")[1] || "",
     password: "",
     confirmPassword: "",
+    notifications: false,
   });
 
   const [deleteUser] = useDeleteUserMutation();
-  const isDeleteTyped = inputValue === 'delete';
+  const isDeleteTyped = inputValue === "delete";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,14 +37,22 @@ const Settings = () => {
       ...prevState,
       [name]: value,
     }));
+
+    setIsBlurred(false);
   };
 
-  const handleSubmit = () => {};
+  const handleCancel = (e) => {
+    setFormData(initialState);
+    setIsBlurred(true);
+  };
+
+  const handleSubmit = () => {
+    const { lastName, firstName, password, confirmPassword } = formData;
+  };
 
   function closeModal() {
     setIsOpen(false);
-    setInputValue('')
-
+    setInputValue("");
   }
 
   function openModal() {
@@ -48,13 +60,17 @@ const Settings = () => {
   }
 
   const handleDeleteUser = async () => {
+    if (!isDeleteTyped) {
+      toast("'delete' must be typed before account deletion.");
+      return;
+    }
+
     if (userInfo && userInfo._id) {
       try {
-        const response = await deleteUser(userInfo._id).unwrap();
-        dispatch(clearCredentials())
-        navigate('/')
-        closeModal()
-        
+        await deleteUser(userInfo._id).unwrap();
+        dispatch(clearCredentials());
+        navigate("/");
+        closeModal();
       } catch (error) {
         console.error("Failed to delete user:", error);
       }
@@ -119,7 +135,7 @@ const Settings = () => {
 
                     <label
                       htmlFor="firstName"
-                      className={`text-sm font-medium text-primary absolute left-2 top-1 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
+                      className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
                         formData.firstName ? "label-active" : ""
                       }`}
                     >
@@ -141,7 +157,7 @@ const Settings = () => {
                   />
                   <label
                     htmlFor="lastName"
-                    className={`text-sm font-medium text-primary absolute left-0 top-1 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
+                    className={`text-sm font-medium text-primary absolute left-3 top-2 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
                       formData.lastName ? "label-active" : ""
                     }`}
                   >
@@ -167,7 +183,7 @@ const Settings = () => {
                   />
                   <label
                     htmlFor="password"
-                    className={`text-sm font-medium text-primary absolute left-2 top-2 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                    className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
                       formData.password ? "label-active" : ""
                     }`}
                   >
@@ -193,7 +209,7 @@ const Settings = () => {
                   />
                   <label
                     htmlFor="confirmPassword"
-                    className={`text-sm font-medium text-primary absolute left-2 top-2 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                    className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
                       formData.confirmPassword ? "label-active" : ""
                     }`}
                   >
@@ -204,8 +220,13 @@ const Settings = () => {
 
               <div className="flex flex-row relative gap-2 items-center">
                 <Checkbox
-                  checked={enabled}
-                  onChange={setEnabled}
+                  checked={formData.notifications}
+                  onChange={() =>
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      notifications: !prevState.notifications,
+                    }))
+                  }
                   className="group size-6 rounded-md bg-gray-400 p-1 ring-1 ring-gray-400 data-[checked]:ring-secondary ring-inset data-[checked]:bg-white"
                 >
                   <CheckIcon className="hidden size-4 fill-black group-data-[checked]:block" />
@@ -215,23 +236,33 @@ const Settings = () => {
 
               <div className="flex items-center gap-8">
                 <button
-                  type="submit"
-                  className="w-[100px] flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={handleCancel}
+                  type="button"
+                  disabled={isBlurred}
+                  className={`${
+                    isBlurred ? "cursor-not-allowed" : "hover:bg-indigo-100"
+                  } w-[100px] font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-primary bg-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="w-[100px] flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className={`${
+                    isBlurred ? "cursor-not-allowed" : "hover:bg-secondary"
+                  } w-[100px] font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-white bg-secondary-300 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500`}
+                  disabled={isBlurred}
                 >
                   Save
                 </button>
               </div>
 
               <h3 className="text-primary font-spaceGrotesk">
-                If you would like to delete your account, {' '}
-                <span className="text-secondary font-bold cursor-pointer" onClick={openModal}>
-                   click here
+                If you would like to delete your account,{" "}
+                <span
+                  className="text-secondary font-bold cursor-pointer"
+                  onClick={openModal}
+                >
+                  click here
                 </span>
               </h3>
             </form>
@@ -242,7 +273,7 @@ const Settings = () => {
             isOpen={isOpen}
             title="Are you sure you want to delete your account?"
             description="Type 'delete'"
-            btnText={["Yes, delete my account", 'Cancel']}
+            btnText={["Yes, delete my account", "Cancel"]}
             inputValue={inputValue}
             setInputValue={setInputValue}
             isDeleteTyped={isDeleteTyped}

@@ -20,6 +20,9 @@ export default {
         theme: "#f9f9fb",
         primary: "#222151",
         secondary: "#913dff",
+        "secondary-100": "#e0c5ff", // Lighter shade
+        "secondary-300": "#b380ff", // Medium shade
+        "secondary-700": "#6c00e6", // Darker shade
         body: '#686a9e'
       },
       fontFamily: {
