@@ -28,10 +28,11 @@ const Login = () => {
 
     try {
       const response = await login(formData).unwrap();
-      dispatch(setCredentials({ ...response }));
+      console.log(response)
+      dispatch(setCredentials({...response}));
       navigate("/profile");
     } catch (err) {
-      toast(err.data.message)
+      toast(err.message)
     }
   };
 

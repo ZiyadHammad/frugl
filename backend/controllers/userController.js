@@ -26,7 +26,7 @@ export const register = asyncHandler(async (req, res) => {
   if (user) {
     genToken(res, user._id);
     res.status(201).json({
-      _id: user._id,
+      id: user._id,
       name: `${user.firstName} ${user.lastName}`,
       email: user.email,
     });
@@ -58,8 +58,7 @@ export const login = asyncHandler(async (req, res) => {
     genToken(res, user._id);
     res.status(200).json({
       name: `${user.firstName} ${user.lastName}`,
-      _id: user._id,
-      name: user.name,
+      id: user._id,
       email: user.email,
     });
   } else {
@@ -117,7 +116,7 @@ export const updateUser = asyncHandler(async (req, res) => {
     const updatedUser = await user.save(user);
     res.status(200).json({
       message: "Success",
-      _id: updatedUser._id,
+      id: updatedUser._id,
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
       email: updatedUser.email,

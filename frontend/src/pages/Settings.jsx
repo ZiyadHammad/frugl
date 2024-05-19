@@ -20,13 +20,15 @@ const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [formData, setFormData] = useState({
+
+  const initState = {
     firstName: userInfo.name.split(" ")[0] || "",
     lastName: userInfo.name.split(" ")[1] || "",
     password: "",
     confirmPassword: "",
     notifications: false,
-  });
+  }
+  const [formData, setFormData] = useState(initState);
 
   const [deleteUser] = useDeleteUserMutation();
   const isDeleteTyped = inputValue === "delete";
@@ -42,7 +44,7 @@ const Settings = () => {
   };
 
   const handleCancel = (e) => {
-    setFormData(initialState);
+    setFormData(initState);
     setIsBlurred(true);
   };
 
