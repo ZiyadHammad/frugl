@@ -49,7 +49,13 @@ const Settings = () => {
   };
 
   const handleSubmit = () => {
-    const { lastName, firstName, password, confirmPassword } = formData;
+    const { lastName, firstName, password, confirmPassword, notifications } = formData;
+
+    if (password !== confirmPassword) {
+      toast('Passwords do not match.')
+      return
+    }
+
   };
 
   function closeModal() {
