@@ -2,19 +2,30 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Checkbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
-import { useUpdateUserMutation, useDeleteUserMutation } from "../slices/usersApiSlice";
+
+import Modal from "../components/Modal";
+import {
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+} from "../slices/usersApiSlice";
+import {clearCredentials} from '../slices/authSlice'
 
 const Settings = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
+  const [isOpen, setIsOpen] = useState(false);
   const [enabled, setEnabled] = useState(true);
+  const [inputValue, setInputValue] = useState('');
   const [formData, setFormData] = useState({
     firstName: userInfo.name.split(" ")[0] || "",
     lastName: userInfo.name.split(" ")[1] || "",
     password: "",
     confirmPassword: "",
   });
+
+  const [deleteUser] = useDeleteUserMutation();
+  const isDeleteTyped = inputValue === 'delete';
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +37,29 @@ const Settings = () => {
 
   const handleSubmit = () => {};
 
+  function closeModal() {
+    setIsOpen(false);
+    setInputValue('')
+
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  const handleDeleteUser = async () => {
+    if (userInfo && userInfo._id) {
+      try {
+        const response = await deleteUser(userInfo._id).unwrap();
+        dispatch(clearCredentials())
+        navigate('/')
+        closeModal()
+        
+      } catch (error) {
+        console.error("Failed to delete user:", error);
+      }
+    }
+  };
 
   return (
     <>
@@ -115,7 +149,7 @@ const Settings = () => {
                   </label>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <h2 className="flex items-center text-lg mb-1 md:mb-0 md:max-h-11">
                   Your Password
@@ -148,9 +182,9 @@ const Settings = () => {
                 </h2>
                 <div className="flex flex-col relative flex-grow">
                   <input
-                    id="password"
+                    id="confirmPassword"
                     onChange={handleChange}
-                    name="password"
+                    name="confirmPassword"
                     value={formData.confirmPassword}
                     type="password"
                     autoComplete="off"
@@ -194,9 +228,26 @@ const Settings = () => {
                 </button>
               </div>
 
-              <h3 className="text-primary font-spaceGrotesk" >If you would like to delete your account, <span className="text-secondary font-bold" onClick={() => {}} >click here</span></h3>
+              <h3 className="text-primary font-spaceGrotesk">
+                If you would like to delete your account, {' '}
+                <span className="text-secondary font-bold cursor-pointer" onClick={openModal}>
+                   click here
+                </span>
+              </h3>
             </form>
           </div>
+          <Modal
+            openModal={openModal}
+            closeModal={closeModal}
+            isOpen={isOpen}
+            title="Are you sure you want to delete your account?"
+            description="Type 'delete'"
+            btnText={["Yes, delete my account", 'Cancel']}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            isDeleteTyped={isDeleteTyped}
+            handleDeleteUser={handleDeleteUser}
+          />
         </div>
       </div>
     </>
