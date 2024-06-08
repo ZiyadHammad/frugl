@@ -111,7 +111,7 @@ const Settings = () => {
                 type="email"
                 autoComplete="off"
                 readOnly
-                className="border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none py-1 pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-md text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
+                className="max-w-xl border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none py-1 pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-md text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
                 required
               />
               <label
@@ -125,29 +125,27 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-10 md:flex-row">
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col relative">
-                <input
-                  onChange={handleChange}
-                  name="firstName"
-                  value={formData.firstName}
-                  type="text"
-                  id="firstName"
-                  autoComplete="off"
-                  className="border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                  required
-                />
+          <div className="flex flex-col gap-8 md:flex-row">
+            <div className="flex flex-col relative">
+              <input
+                onChange={handleChange}
+                name="firstName"
+                value={formData.firstName}
+                type="text"
+                id="firstName"
+                autoComplete="off"
+                className="max-w-xl border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                required
+              />
 
-                <label
-                  htmlFor="firstName"
-                  className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
-                    formData.firstName ? "label-active" : ""
-                  }`}
-                >
-                  First Name
-                </label>
-              </div>
+              <label
+                htmlFor="firstName"
+                className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
+                  formData.firstName ? "label-active" : ""
+                }`}
+              >
+                First Name
+              </label>
             </div>
 
             <div className="flex flex-col relative">
@@ -158,7 +156,7 @@ const Settings = () => {
                 type="text"
                 id="lastName"
                 autoComplete="off"
-                className="border-2 rounded-lg pl-2 focus:outline-none py-1 focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                className="max-w-xl border-2 rounded-lg pl-2 focus:outline-none py-1 focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                 required
               />
               <label
@@ -181,7 +179,7 @@ const Settings = () => {
                 value={formData.password}
                 type="password"
                 autoComplete="off"
-                className="border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                className="max-w-xl border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                 required
               />
               <label
@@ -204,7 +202,7 @@ const Settings = () => {
                 value={formData.confirmPassword}
                 type="password"
                 autoComplete="off"
-                className="border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                className="max-w-xl border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                 required
               />
               <label
