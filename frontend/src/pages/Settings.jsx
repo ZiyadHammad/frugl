@@ -16,7 +16,10 @@ const Settings = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [deleteUser] = useDeleteUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
+  
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -30,7 +33,6 @@ const Settings = () => {
   }
   const [formData, setFormData] = useState(initState);
 
-  const [deleteUser] = useDeleteUserMutation();
   const isDeleteTyped = inputValue === "delete";
 
   const handleChange = (e) => {
@@ -48,7 +50,8 @@ const Settings = () => {
     setIsBlurred(true);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     const { lastName, firstName, password, confirmPassword, notifications } = formData;
 
     if (password !== confirmPassword) {
@@ -256,8 +259,8 @@ const Settings = () => {
                 <button
                   type="submit"
                   className={`${
-                    isBlurred ? "cursor-not-allowed" : "hover:bg-secondary"
-                  } w-[100px] font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-white bg-secondary-300 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500`}
+                    isBlurred ? "bg-secondary-300 cursor-not-allowed" : "hover:bg-secondary-700 bg-secondary"
+                  } w-[100px] font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500`}
                   disabled={isBlurred}
                 >
                   Save
