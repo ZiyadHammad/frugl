@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Checkbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 import { toast } from "react-toastify";
-
 import Modal from "../components/Modal";
 import {
   useUpdateUserMutation,
@@ -84,7 +83,7 @@ const Settings = () => {
     // }
 
     try {
-      await updateUser(firstName, lastName).unwrap()
+      await updateUser({firstName, lastName}).unwrap()
       let userInfo = JSON.parse(localStorage.getItem('userInfo'));
       userInfo.name = `${firstName} ${lastName}`
       dispatch(setCredentials(userInfo))

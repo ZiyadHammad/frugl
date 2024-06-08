@@ -106,6 +106,7 @@ export const getUser = asyncHandler(async (req, res) => {
 export const updateUser = asyncHandler(async (req, res) => {
   // req.user does not have password so we are fetching the user data including the password frm db
   const user = await Users.findById(req.user._id);
+  console.log(req.body)
 
   if (user) {
     (user.firstName = req.body.firstName || user.firstName),
