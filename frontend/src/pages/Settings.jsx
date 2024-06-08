@@ -10,7 +10,7 @@ import {
   useUpdateUserMutation,
   useDeleteUserMutation,
 } from "../slices/usersApiSlice";
-import { clearCredentials } from "../slices/authSlice";
+import { clearCredentials, setCredentials } from "../slices/authSlice";
 
 const Settings = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -18,11 +18,9 @@ const Settings = () => {
   const navigate = useNavigate();
   const [deleteUser] = useDeleteUserMutation();
   const [updateUser] = useUpdateUserMutation();
-
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
   const [inputValue, setInputValue] = useState("");
-
   const initState = {
     firstName: userInfo.name.split(" ")[0] || "",
     lastName: userInfo.name.split(" ")[1] || "",
@@ -31,7 +29,6 @@ const Settings = () => {
     notifications: false,
   };
   const [formData, setFormData] = useState(initState);
-
   const isDeleteTyped = inputValue === "delete";
 
   const handleChange = (e) => {
@@ -47,17 +44,6 @@ const Settings = () => {
   const handleCancel = (e) => {
     setFormData(initState);
     setIsBlurred(true);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { lastName, firstName, password, confirmPassword, notifications } =
-      formData;
-
-    if (password !== confirmPassword) {
-      toast("Passwords do not match.");
-      return;
-    }
   };
 
   function closeModal() {
@@ -87,6 +73,27 @@ const Settings = () => {
     }
   };
 
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    const { lastName, firstName, password, confirmPassword, notifications } =
+      formData;
+
+    // if (password !== confirmPassword) {
+    //   toast("Passwords do not match.");
+    //   return;
+    // }
+
+    try {
+      await updateUser(firstName, lastName).unwrap()
+      let userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      userInfo.name = `${firstName} ${lastName}`
+      dispatch(setCredentials(userInfo))
+      toast('Account Updated Successfully!')
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+    }
+  };
+
   return (
     <>
       <div className="w-full bg-theme">
@@ -99,7 +106,7 @@ const Settings = () => {
 
       <div className="w-full bg-white pt-10">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleUpdateUser}
           className="space-y-8 max-w-[1100px] mx-auto py-10 pl-10"
         >
           <div className="flex items-center gap-4">
@@ -180,7 +187,7 @@ const Settings = () => {
                 type="password"
                 autoComplete="off"
                 className="max-w-xl border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                required
+                // required
               />
               <label
                 htmlFor="password"
@@ -203,7 +210,7 @@ const Settings = () => {
                 type="password"
                 autoComplete="off"
                 className="max-w-xl border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                required
+                // required
               />
               <label
                 htmlFor="confirmPassword"
