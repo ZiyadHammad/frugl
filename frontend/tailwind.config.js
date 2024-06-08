@@ -27,6 +27,7 @@ export default {
       },
       fontFamily: {
         spaceGrotesk: ["Space Grotesk", "sans-serif"],
+        carlito: ["carlito", "sans-serif"],
       },
       fontWeight: {
         "1": "100",
