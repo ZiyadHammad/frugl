@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
+import Contact from './pages/Contact.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 import "./index.css";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: 'contact',
+        element: <Contact />
       },
       {
         element: <PrivateRoute />,
