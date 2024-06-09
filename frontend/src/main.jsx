@@ -14,6 +14,8 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Contact from './pages/Contact.jsx'
 import NotFound from './pages/NotFound.jsx'
+import Scraper from './pages/Scraper';
+import MyProducts from './pages/MyProducts';
 
 import "./index.css";
 
@@ -44,6 +46,16 @@ const router = createBrowserRouter([
           {
             path: "dashboard",
             element: <Dashboard />,
+            children: [
+              {
+                path: 'scraper',
+                element: <Scraper />
+              },
+              {
+                path: 'products',
+                element: <MyProducts />
+              }
+            ]
           },
           {
             path: "settings",
