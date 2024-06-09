@@ -12,8 +12,8 @@ const heroImages = [
 const HeroCarousel = () => {
   return (
     <div
-    className="relative px-10 py-5
-       pt-20 pb-5 max-w-[560px] max-h-[700px] 
+    className="relative px-10 
+       pt-20 pb-5 max-w-[300px] max-h-[400px] md:max-w-[500px] md:max-h-[700px] 
       w-full bg-[#F2F4F7] rounded-[30px] mx-auto"
     >
     <Carousel
@@ -29,7 +29,7 @@ const HeroCarousel = () => {
           key={image.alt}
           src={image.url}
           alt={image.alt}
-          className="object-contain sm:max-h-120 sm:max-w-60 md:max-w-none md:max-h-none"
+          className="object-contain max-h-80 max-w-40 md:max-w-60 md:max-h-100 lg:max-w-none lg:max-h-none"
         />
       ))}
       </Carousel>

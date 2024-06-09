@@ -96,7 +96,7 @@ const Settings = () => {
   return (
     <>
       <div className="w-full bg-theme">
-        <div className="max-w-[1000px] mx-auto h-[120px] pl-10 flex justify-center items-center md:justify-start">
+        <div className="max-w-[1000px] mx-auto h-[120px] md:pl-10 flex justify-center items-center md:justify-start">
           <h1 className="text-primary font-carlito font-medium text-4xl">
             Account Settings
           </h1>
@@ -106,7 +106,7 @@ const Settings = () => {
       <div className="w-full bg-white pt-10">
         <form
           onSubmit={handleUpdateUser}
-          className="space-y-8 max-w-[1100px] mx-auto py-10 pl-10"
+          className="space-y-8 max-w-[1000px] mx-auto py-10 md:pl-10 flex flex-col items-center md:items-start"
         >
           <div className="flex items-center gap-4">
             <div className="flex flex-col relative flex-grow">
@@ -117,7 +117,7 @@ const Settings = () => {
                 type="email"
                 autoComplete="off"
                 readOnly
-                className="max-w-xl border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none py-1 pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-md text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
+                className="min-w-[300px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none py-1 pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-md text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
                 required
               />
               <label
@@ -140,7 +140,7 @@ const Settings = () => {
                 type="text"
                 id="firstName"
                 autoComplete="off"
-                className="max-w-xl border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                 required
               />
 
@@ -162,7 +162,7 @@ const Settings = () => {
                 type="text"
                 id="lastName"
                 autoComplete="off"
-                className="max-w-xl border-2 rounded-lg pl-2 focus:outline-none py-1 focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                className="min-w-[300px] border-2 rounded-lg pl-2 focus:outline-none py-1 focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                 required
               />
               <label
@@ -185,7 +185,7 @@ const Settings = () => {
                 value={formData.password}
                 type="password"
                 autoComplete="off"
-                className="max-w-xl border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                 // required
               />
               <label
@@ -208,7 +208,7 @@ const Settings = () => {
                 value={formData.confirmPassword}
                 type="password"
                 autoComplete="off"
-                className="max-w-xl border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                 // required
               />
               <label
@@ -262,7 +262,7 @@ const Settings = () => {
             </button>
           </div>
 
-          <h3 className="text-primary font-spaceGrotesk">
+          <h3 className="text-primary font-spaceGrotesk text-center md:text-start">
             If you would like to delete your account,{" "}
             <span
               className="text-secondary font-bold cursor-pointer"

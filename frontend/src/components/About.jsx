@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <section className="flex flex-col py-40 items-center text-center">
+    <section className="flex flex-col py-20 lg:py-40 items-center text-center">
       <h1 className="text-primary font-bold text-2xl  md:text-4xl mb-2 md:mb-4">
         Unlock savings effortlessly.
       </h1>

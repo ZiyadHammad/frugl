@@ -13,11 +13,13 @@ const Navbar = () => {
   const [logout] = useLogoutMutation();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const handleMenuClose = () => setMenuOpen(false)
 
   const handleSignOut = async () => {
     try {
       await logout().unwrap();
       dispatch(clearCredentials());
+      handleMenuClose()
       navigate('/');
     } catch (err) {
       // Handle error appropriately
@@ -36,9 +38,9 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-5">
           {userInfo ? (
             <>
-              <NavLink to="/profile" className="flex items-center gap-2 text-md text-gray-700 hover:bg-gray-100">
-                <img src="/assets/icons/dashboard.svg" alt="Profile" className="h-5" />
-                Profile
+              <NavLink to="/dashboard" className="flex items-center gap-2 text-md text-gray-700 hover:bg-gray-100">
+                <img src="/assets/icons/dashboard.svg" alt="Dashboard" className="h-5" />
+                Dashboard
               </NavLink>
               <NavLink to="/settings" className="flex items-center gap-2 text-md text-gray-700 hover:bg-gray-100">
                 <img src="/assets/icons/settings.svg" alt="Settings" className="h-5" />
@@ -65,7 +67,7 @@ const Navbar = () => {
           <img
             src={`/assets/icons/${menuOpen ? "close" : "menu"}.svg`}
             alt="menu"
-            className="object-contain w-10 h-10"
+            className="object-contain w-5 h-5"
             onClick={toggleMenu}
           />
         </div>
@@ -82,11 +84,11 @@ const Navbar = () => {
               <div className="flex flex-col pl-8 pt-8 gap-2">
                 {userInfo ? (
                   <>
-                    <NavLink to="/profile" className="flex items-center gap-2 text-md text-gray-700 hover:bg-gray-100">
-                      <img src="/assets/icons/dashboard.svg" alt="Profile" className="h-5" />
-                      Profile
+                    <NavLink onClick={handleMenuClose} to="/dashboard" className="flex items-center gap-2 text-md text-gray-700 hover:bg-gray-100">
+                      <img src="/assets/icons/dashboard.svg" alt="Dashboard" className="h-5" />
+                      Dashboard
                     </NavLink>
-                    <NavLink to="/settings" className="flex items-center gap-2 text-md text-gray-700 hover:bg-gray-100">
+                    <NavLink onClick={handleMenuClose} to="/settings" className="flex items-center gap-2 text-md text-gray-700 hover:bg-gray-100">
                       <img src="/assets/icons/settings.svg" alt="Settings" className="h-5" />
                       Settings
                     </NavLink>
@@ -97,8 +99,8 @@ const Navbar = () => {
                   </>
                 ) : (
                   <>
-                    <NavLink to="/login" className="text-body text-xl z-11">Log In</NavLink>
-                    <NavLink to="/register" className="text-body text-xl z-11">Get Started ➞</NavLink>
+                    <NavLink onClick={handleMenuClose} to="/login" className="text-body text-xl z-11">Log In</NavLink>
+                    <NavLink onClick={handleMenuClose} to="/register" className="text-body text-xl z-11">Get Started ➞</NavLink>
                   </>
                 )}
               </div>

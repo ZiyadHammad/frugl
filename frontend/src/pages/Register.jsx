@@ -24,7 +24,7 @@ const Register = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/profile");
+      navigate("/dashboard");
     }
   }, [navigate, userInfo]);
 
@@ -40,7 +40,7 @@ const Register = () => {
         const response = await register(formData).unwrap();
         console.log(response)
         dispatch(setCredentials({...response}));
-        navigate("/profile");
+        navigate("/dashboard");
       } catch (error) {
         throw new Error(error.message);
       }

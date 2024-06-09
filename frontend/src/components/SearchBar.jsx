@@ -14,7 +14,7 @@ const SearchBar = () => {
 
   return (
     <>
-      <div className="flex flex-wrap gap-4 mt-12">
+      <div className="hidden lg:flex flex-wrap gap-4 mt-20 md:mt-12">
         <input
           id="url-input"
           name="url-input"
