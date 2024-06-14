@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
 import { Checkbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 import { toast } from "react-toastify";
+
 import Modal from "../components/Modal";
-import {
-  useUpdateUserMutation,
-  useDeleteUserMutation,
-} from "../slices/usersApiSlice";
+import { useUpdateUserMutation, useDeleteUserMutation } from "../slices/usersApiSlice";
 import { clearCredentials, setCredentials } from "../slices/authSlice";
 
 const Settings = () => {
@@ -20,6 +19,8 @@ const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [formData, setFormData] = useState(initState);
+  const isDeleteTyped = inputValue === "delete";
   const initState = {
     firstName: userInfo.name.split(" ")[0] || "",
     lastName: userInfo.name.split(" ")[1] || "",
@@ -27,8 +28,6 @@ const Settings = () => {
     confirmPassword: "",
     notifications: false,
   };
-  const [formData, setFormData] = useState(initState);
-  const isDeleteTyped = inputValue === "delete";
 
   const handleChange = (e) => {
     const { name, value } = e.target;

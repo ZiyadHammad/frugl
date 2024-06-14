@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
+
 import ProductCard from "../components/ProductCard";
-import { useOutletContext } from "react-router-dom";
-import Loader from "../components/Loader";
-import { useEffect, useState } from "react";
+// import Loader from "../components/Loader";
 
 const MyProducts = () => {
   const { userProducts } = useSelector((state) => state.items);
