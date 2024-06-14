@@ -16,6 +16,7 @@ import Contact from './pages/Contact.jsx'
 import NotFound from './pages/NotFound.jsx'
 import Scraper from './pages/Scraper';
 import MyProducts from './pages/MyProducts';
+import ProductDetail from './pages/ProductDetail'
 
 import "./index.css";
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
               {
                 path: 'products',
                 element: <MyProducts />
+              },
+              {
+                path: 'products/:productId',
+                element: <ProductDetail/>
               }
             ]
           },

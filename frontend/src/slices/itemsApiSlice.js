@@ -18,23 +18,22 @@ export const itemsApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getItemById: builder.mutation({
-      query: (data) => ({
-        url: `${ITEMS_URL}${id}`,
+      query: (id) => ({
+        url: `${ITEMS_URL}/${id}`,
         method: 'GET'
       }),
     }),
     updateItem: builder.mutation({
       query: (data) => ({
-        url: `${ITEMS_URL}${id}`,
+        url: (id) => `${ITEMS_URL}/${id}`,
         method: 'PUT',
         body: data
       }),
     }),
     deleteItem: builder.mutation({
-      query: (data) => ({
-        url: `${ITEMS_URL}${id}`,
-        method: 'DELETE',
-        body: data
+      query: (id) => ({
+        url: `${ITEMS_URL}/${id}`,
+        method: 'DELETE'
       }),
     }),
   })

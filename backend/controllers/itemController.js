@@ -61,8 +61,7 @@ export const getItemById = asyncHandler(async (req, res) => {
     }
 
     res.status(200).json({
-      _id: item._id,
-      title: item.title,
+      item
     });
   } catch (error) {
     res.status(500);
