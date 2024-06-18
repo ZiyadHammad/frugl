@@ -5,15 +5,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import store from "./store.js";
 import { Provider } from "react-redux";
 
-import Layout from "./layouts/Layout";
+import MainLayout from "./layouts/MainLayout";
+import ChildLayout from "./layouts/ChildLayout";
+
 import PrivateRoute from "./utils/PrivateRoute.jsx";
+import NotFound from './pages/NotFound.jsx'
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Contact from './pages/Contact.jsx'
+
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
-import Contact from './pages/Contact.jsx'
-import NotFound from './pages/NotFound.jsx'
 import Scraper from './pages/Scraper';
 import MyProducts from './pages/MyProducts';
 import ProductDetail from './pages/ProductDetail'
@@ -23,7 +27,7 @@ import "./index.css";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <MainLayout />,
     children: [
       {
         path: "/",
@@ -38,42 +42,46 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: 'contact',
-        element: <Contact />
-      },
+        path: "contact",
+        element: <Contact />,
+      }
+    ]
+  },
+  {
+    element: <ChildLayout />,
+    path: '/',
+    children: [
       {
         element: <PrivateRoute />,
         children: [
           {
-            path: "dashboard",
             element: <Dashboard />,
-            children: [
-              {
-                path: 'scraper',
-                element: <Scraper />
-              },
-              {
-                path: 'products',
-                element: <MyProducts />
-              },
-              {
-                path: 'products/:productId',
-                element: <ProductDetail/>
-              }
-            ]
+            path: 'dashboard'
           },
           {
-            path: "settings",
-            element: <Settings />,
+            element: <Scraper /> ,
+            path: 'scraper'
           },
-        ],
+          {
+            element: <MyProducts /> ,
+            path: 'products'
+          },
+          {
+            element: <ProductDetail /> ,
+            path: 'products/:productId'
+          },
+          {
+            element: <Settings /> ,
+            path: 'settings'
+          },
+        ]
       },
-      {
-        path: '*',
-        element: <NotFound />
-      }
-    ],
+    ]
   },
+  {
+    element: <NotFound />,
+    path: '*'
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

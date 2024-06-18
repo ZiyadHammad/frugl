@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import Footer from '../components/Footer'
 
-const Layout = () => {
+const MainLayout = () => {
   return (
     <div className="w-full">
       <Navbar />
@@ -16,4 +16,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default MainLayout;

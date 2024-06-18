@@ -19,7 +19,6 @@ const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [formData, setFormData] = useState(initState);
   const isDeleteTyped = inputValue === "delete";
   const initState = {
     firstName: userInfo.name.split(" ")[0] || "",
@@ -28,6 +27,7 @@ const Settings = () => {
     confirmPassword: "",
     notifications: false,
   };
+  const [formData, setFormData] = useState(initState);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -94,8 +94,8 @@ const Settings = () => {
 
   return (
     <>
-      <div className="w-full bg-theme">
-        <div className="max-w-[1000px] mx-auto h-[120px] md:pl-10 flex justify-center items-center md:justify-start">
+      <div className="w-full">
+        <div className="max-w-[1000px] h-[120px] md:pl-10 flex justify-center items-center md:justify-start">
           <h1 className="text-primary font-carlito font-medium text-4xl">
             Account Settings
           </h1>
@@ -105,7 +105,7 @@ const Settings = () => {
       <div className="w-full bg-white pt-10">
         <form
           onSubmit={handleUpdateUser}
-          className="space-y-8 max-w-[1000px] mx-auto py-10 md:pl-10 flex flex-col items-center md:items-start"
+          className="space-y-8 max-w-[1000px] py-10 md:pl-10 flex flex-col items-center md:items-start"
         >
           <div className="flex items-center gap-4">
             <div className="flex flex-col relative flex-grow">
