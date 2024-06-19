@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const ProductCard = ({ product }) => {
   return (
     <Link
-      to={`/dashboard/products/${product._id}`}
+      to={`/products/${product._id}`}
       className="max-w-[200px] flex-1 flex flex-col gap-4 rounded-md"
     >
       <div className="flex-1 relative flex flex-col gap-5 p-4 rounded-md">

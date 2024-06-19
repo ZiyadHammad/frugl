@@ -2,7 +2,7 @@ import { Link, useParams, useOutletContext } from "react-router-dom";
 import {useSelector} from 'react-redux'
 import Loader from "../components/Loader";
 import ProductCardInfo from "../components/ProductCardInfo";
-import Modal from "../components/Modal";
+import TrackProductModal from "../components/TrackProductModal";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -14,13 +14,14 @@ const ProductDetail = () => {
   }
 
   return ( 
-    <div className="flex flex-col gap-16 flex-wrap max-w-[1100px] mx-auto">
-      <h2 className="text-primary text-[32px] font-semibold text-center lg:text-start">
+    <div className="flex flex-col gap-16 flex-wrap max-w-[1300px]">
+      <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
         Details
       </h2>
 
       <div className="flex gap-28 xl:flex-row flex-col">
-          <div className="flex-grow xl:max-w-[50%] max-w-full py-16 border border-[#CDDBFF] rounded-[17px]">
+        
+          <div className="max-h-[600px] pt-16 border border-[#CDDBFF] rounded-[17px]">
             <img src={product.image} alt={product.title} className="w-[500px] h-[400px]" />
           </div>
 
@@ -127,7 +128,7 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            {/* <Modal /> */}
+            <TrackProductModal />
           </div>
       </div>
 
