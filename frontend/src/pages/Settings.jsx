@@ -94,8 +94,8 @@ const Settings = () => {
 
   return (
     <>
-    <section className="flex flex-col px-12 pt-10 lg:pt-0">
-      <h2 className="text-primary text-[32px] font-semibold text-center md:text-start">
+    <section className="flex flex-col gap-10 px-6 pt-10 lg:pt-0">
+      <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
         Account Settings
       </h2>
     </section>
@@ -103,7 +103,7 @@ const Settings = () => {
       <div className="w-full bg-white pt-10">
         <form
           onSubmit={handleUpdateUser}
-          className="space-y-8 max-w-[1000px] py-10 px-12 flex flex-col items-center md:items-start"
+          className="space-y-8 max-w-[1000px] py-10 px-6 flex flex-col items-center md:items-start"
         >
           <div className="flex items-center gap-4">
             <div className="flex flex-col relative flex-grow">
