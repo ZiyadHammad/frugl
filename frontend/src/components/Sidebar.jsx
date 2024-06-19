@@ -38,8 +38,8 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="hidden lg:flex flex-col h-screen bg-theme text-primary w-72 border-r">
-        <div className="flex items-center gap-2 justify-start p-8">
+      <div className="hidden lg:flex sticky top-0 flex-col h-screen bg-theme text-primary w-72 border-r">
+        <div className="flex items-center gap-4 justify-start p-8">
           <img src="/icon.svg" alt="logo" className="h-10 w-10" />
           <Link
             to="/"
