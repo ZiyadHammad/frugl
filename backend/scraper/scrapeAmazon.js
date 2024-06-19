@@ -56,7 +56,6 @@ export const scrapeAmazonItem = async (url) => {
     );
 
     const data = {
-      userId: '',
       title,
       image: imageUrls[0],
       originalPrice: Number(originalPrice),

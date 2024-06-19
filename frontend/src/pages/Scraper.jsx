@@ -13,7 +13,7 @@ const Scraper = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const response = await createItem(productUrl).unwrap()
+    const response = await createItem({ url: productUrl}).unwrap()
     console.log(response)
     // dispatch()
     try {

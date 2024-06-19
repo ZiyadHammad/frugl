@@ -8,6 +8,7 @@ import { scrapeAmazonItem } from "../scraper/scrapeAmazon.js";
 // @access Private
 export const createItem = asyncHandler(async (req, res) => {
   const { url } = req.body;
+  console.log(url)
 
   try {
     const itemDetails = await scrapeAmazonItem(url);
