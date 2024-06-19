@@ -100,10 +100,10 @@ const Settings = () => {
       </h2>
     </section>
 
-      <div className="w-full bg-white pt-10">
+      <div className="w-full bg-inherit pt-10">
         <form
           onSubmit={handleUpdateUser}
-          className="space-y-8 max-w-[1000px] py-10 px-6 flex flex-col items-center md:items-start"
+          className="space-y-8 max-w-[1000px] py-10 px-6 flex flex-col items-center md:items-start "
         >
           <div className="flex items-center gap-4">
             <div className="flex flex-col relative flex-grow">
