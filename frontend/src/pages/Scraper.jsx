@@ -32,7 +32,7 @@ const Scraper = () => {
         </h2>
       </section>
 
-      <div className="pt-10 h-[85.1vh]">
+      <div className="pt-10 px-4 h-[85.1vh]">
         <div className="border rounded-xl max-w-[600px] mx-auto shadow-sm bg-white border-gray-200 p-6">
           <div className="min-h-[250px] flex items-center">
             <Scene />

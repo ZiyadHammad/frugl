@@ -14,24 +14,27 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="flex flex-col gap-16 flex-wrap max-w-[1300px]">
-      <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
+    <div className="flex flex-col gap-16">
+      <h2 className="text-primary text-[32px] font-semibold text-center xl:text-start lg:border-b">
         Details
       </h2>
 
-      <div className="flex gap-28 xl:flex-row flex-col">
-        <div className="max-h-[600px] pt-16 border border-[#CDDBFF] rounded-[17px]">
+      <div className="flex gap-20 flex-col items-center xl:items-start xl:flex-row xl:justify-evenly">
+
+        <div className="hidden xl:flex max-h-[600px] max-w-[600px] pt-16 border border-[#CDDBFF] rounded-[17px]">
           <img
             src={product.image}
             alt={product.title}
-            className="w-[500px] h-[400px]"
+            className="max-h-[300px] max-w-[300px]  lg:max-w-[600px] lg:max-h-[600px]"
           />
         </div>
 
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col px-10 xl:px-0 max-w-[600px]">
           <div className="flex justify-between items-start gap-5 flex-wrap pb-6">
+            
             <div className="flex flex-col gap-3">
-              <p className="text-[28px] text-secondary font-semibold">
+
+              <p className="text-[22px] text-secondary font-semibold">
                 {product.title}
               </p>
 
@@ -61,12 +64,14 @@ const ProductDetail = () => {
                 <img src="/assets/icons/share.svg" alt="share" />
               </div>
             </div>
+
           </div>
 
           {/* Product-Info */}
           <div className="flex items-center flex-wrap gap-10 py-6 border-y border-y-[#E4E4E4]">
+            
             <div className="flex flex-col gap-2">
-              <p className="text-[34px] text-secondary font-bold">
+              <p className="text-[32px] text-secondary font-bold">
                 {product.currency} {product.currentPrice}
               </p>
               <p className="text-[21px] text-black opacity-50 line-through">
@@ -98,7 +103,16 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          <div className="my-7 flex flex-col gap-5">
+          <div className="xl:hidden max-h-[600px] max-w-[600px] pt-16 border border-[#CDDBFF] rounded-[17px]">
+          <img
+            src={product.image}
+            alt={product.title}
+            className="max-h-[300px] max-w-[300px]  lg:max-w-[600px] lg:max-h-[600px] mx-auto"
+          />
+        </div>
+
+
+          <div className="my-7 flex flex-col"> 
             <div className="flex gap-5 flex-wrap">
               <ProductCardInfo
                 title="Current Price"
@@ -127,7 +141,7 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-16 px-10">
         <div className="flex flex-col gap-5">
           <h3 className="text-2xl text-secondary font-semibold">
             Product Description

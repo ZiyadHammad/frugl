@@ -4,7 +4,7 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       to={`/products/${product._id}`}
-      className="max-w-[200px] flex-1 flex flex-col gap-4 rounded-md"
+      className="max-w-[200px] flex-1 flex flex-col gap-4 "
     >
       <div className="flex-1 relative flex flex-col gap-5 p-4 rounded-md">
         <img

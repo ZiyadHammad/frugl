@@ -27,7 +27,7 @@ const ChildLayout = () => {
   return (
     <div className="flex flex-col lg:flex-row">
       <Sidebar />
-      <div className="lg:flex-1 lg:p-10 bg-[#f2f2f2]">
+      <div className="lg:flex-1 lg:p-10">
         <Outlet context={{userInfo}} />
       </div>
     </div>
