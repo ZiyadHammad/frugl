@@ -1,4 +1,4 @@
-import Items from "../models/itemSchema.js";
+import Items from "../models/itemModel.js";
 import asyncHandler from "express-async-handler";
 
 import { scrapeAmazonItem } from "../scraper/scrapeAmazon.js";

@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import genToken from "../utils/genToken.js";
 import Users from "../models/userModel.js";
+import Items from "../models/itemModel.js";
 
 // @desc Register a new user
 // @route POST /api/users/register
@@ -77,7 +78,7 @@ export const logout = asyncHandler(async (req, res) => {
     expires: new Date(0), // expires right away
   });
 
-  console.log(`User ID: logged out successfully`)
+  console.log(`User ID: logged out successfully`);
 
   res.status(200).json({ message: "Logged out successfully." });
 });
@@ -106,7 +107,7 @@ export const getUser = asyncHandler(async (req, res) => {
 export const updateUser = asyncHandler(async (req, res) => {
   // req.user does not have password so we are fetching the user data including the password frm db
   const user = await Users.findById(req.user._id);
-  console.log(req.body)
+  console.log(req.body);
 
   if (user) {
     (user.firstName = req.body.firstName || user.firstName),
@@ -136,13 +137,19 @@ export const deleteUser = asyncHandler(async (req, res) => {
     throw new Error(`User is not authenticated. ${error.message}`);
   }
 
-  // Find user by ID and delete it
+  const userId = req.user._id;
+  const items = await Items.find({ userId });
+  console.log(userId, { userId });
+  if (items.length > 0) {
+    await Items.deleteMany({ userId });
+  }
+
   const user = await Users.findByIdAndDelete(req.user._id);
 
   if (user) {
     res.status(200).json({ message: "User deleted successfully" });
   } else {
     res.status(404).json({ message: "User not found" });
-    console.log(error.message)
+    console.log(error.message);
   }
 });

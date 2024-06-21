@@ -4,7 +4,7 @@ const itemSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      requried: true,
+      required: true,
       ref: "Users",
     },
     url: {

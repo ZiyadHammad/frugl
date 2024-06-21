@@ -12,11 +12,14 @@ const itemSlice = createSlice({
       state.userProducts = action.payload;
       localStorage.setItem("userProducts", JSON.stringify(action.payload));
     },
-    deleteItem: (state, action) => {},
+    clearProducts: (state, actions) => {
+      state.userProducts = null
+      localStorage.removeItem('userProducts')
+    },
     updateItem: (state, action) => {},
   },
 });
 
-export const { setItems } = itemSlice.actions;
+export const { setItems, clearProducts } = itemSlice.actions;
 
 export default itemSlice.reducer;

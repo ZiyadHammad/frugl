@@ -59,9 +59,9 @@ const Settings = () => {
       return;
     }
 
-    if (userInfo && userInfo._id) {
+    if (userInfo && userInfo.id) {
       try {
-        await deleteUser(userInfo._id).unwrap();
+        await deleteUser(userInfo.id).unwrap();
         dispatch(clearCredentials());
         navigate("/");
         closeModal();
