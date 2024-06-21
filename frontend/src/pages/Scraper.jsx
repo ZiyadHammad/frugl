@@ -1,28 +1,34 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useCreateItemMutation } from "../slices/itemsApiSlice";
-import { setItems } from "../slices/itemSlice";
+// import { setItems } from "../slices/itemSlice";
 
+import Loader from "../components/Loader";
 import Scene from "../components/Canvas/Scene";
 
 const Scraper = () => {
-  const [productUrl, setProductUrl] = useState('')
-  const dispatch = useDispatch();
+  const [productUrl, setProductUrl] = useState("");
   const [createItem, { isLoading }] = useCreateItemMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const response = await createItem({ url: productUrl}).unwrap()
-    console.log(response)
-    // dispatch()
+    const response = await createItem({ url: productUrl }).unwrap();
+    console.log(response);
+    // dispatch(setItems())
+    navigate('/products')
     try {
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  console.log(productUrl)
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>

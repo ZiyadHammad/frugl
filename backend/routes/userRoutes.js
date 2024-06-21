@@ -6,6 +6,7 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  validateUser,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -14,9 +15,10 @@ const router = express.Router();
 // Public
 router.post("/login", login);
 router.post("/register", register);
-router.post("/logout", logout);
 
 // Private
+router.post("/logout", protect, logout);
+router.post("/validate", protect, validateUser);
 router
   .route("/profile")
   .get(protect, getUser)

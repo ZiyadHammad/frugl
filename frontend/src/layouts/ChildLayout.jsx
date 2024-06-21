@@ -1,7 +1,8 @@
-import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
-
+import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import { ToastContainer } from "react-toastify";
 import { useGetItemsMutation } from "../slices/itemsApiSlice";
 import { setItems } from "../slices/itemSlice";
 
@@ -27,6 +28,7 @@ const ChildLayout = () => {
   return (
     <div className="flex flex-col lg:flex-row">
       <Sidebar />
+      <ToastContainer />
       <div className="lg:flex-1 lg:p-10">
         <Outlet context={{userInfo}} />
       </div>

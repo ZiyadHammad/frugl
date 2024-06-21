@@ -1,32 +1,29 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
 import { Checkbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { useUpdateUserMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../slices/authSlice";
 
-import Modal from "../components/Modal";
-import { useUpdateUserMutation, useDeleteUserMutation } from "../slices/usersApiSlice";
-import { clearCredentials, setCredentials } from "../slices/authSlice";
+import DeleteModal from "../components/DeleteModal";
+import ConfirmationModal from "../components/ConfirmationModal";
+import Loader from "../components/Loader";
 
 const Settings = () => {
   const { userInfo } = useSelector((state) => state.auth);
+  const initState = {
+    firstName: userInfo.name.split(" ")[0],
+    lastName: userInfo.name.split(" ")[1],
+    password: "",
+    confirmPassword: ""
+  };
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [deleteUser] = useDeleteUserMutation();
-  const [updateUser] = useUpdateUserMutation();
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const isDeleteTyped = inputValue === "delete";
-  const initState = {
-    firstName: userInfo.name.split(" ")[0] || "",
-    lastName: userInfo.name.split(" ")[1] || "",
-    password: "",
-    confirmPassword: "",
-    notifications: false,
-  };
   const [formData, setFormData] = useState(initState);
 
   const handleChange = (e) => {
@@ -53,52 +50,49 @@ const Settings = () => {
     setIsOpen(true);
   }
 
-  const handleDeleteUser = async () => {
-    if (!isDeleteTyped) {
-      toast("'delete' must be typed before account deletion.");
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    const { lastName, firstName, password, confirmPassword } = formData;
+
+    if (password !== confirmPassword) {
+      toast("Passwords do not match.");
       return;
     }
 
-    if (userInfo && userInfo.id) {
-      try {
-        await deleteUser(userInfo.id).unwrap();
-        dispatch(clearCredentials());
-        navigate("/");
-        closeModal();
-      } catch (error) {
-        console.error("Failed to delete user:", error);
-      }
+    if (password && password.length < 6) {
+      toast("Passwords does not meet password requirements");
+      return;
     }
-  };
-
-  const handleUpdateUser = async (e) => {
-    e.preventDefault();
-    const { lastName, firstName, password, confirmPassword, notifications } =
-      formData;
-
-    // if (password !== confirmPassword) {
-    //   toast("Passwords do not match.");
-    //   return;
-    // }
 
     try {
-      await updateUser({firstName, lastName}).unwrap()
-      let userInfo = JSON.parse(localStorage.getItem('userInfo'));
-      userInfo.name = `${firstName} ${lastName}`
-      dispatch(setCredentials(userInfo))
-      toast('Account Updated Successfully!')
+      const updatePayload = { firstName, lastName };
+
+      if (password) {
+        updatePayload.password = password;
+      }
+
+      await updateUser(updatePayload).unwrap();
+
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      userInfo.name = `${firstName} ${lastName}`;
+
+      dispatch(setCredentials(userInfo));
+      toast("Account Successfully Updated!");
     } catch (error) {
       console.error("Failed to delete user:", error);
     }
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
-    <section className="flex flex-col gap-10 px-6 pt-10 lg:pt-0">
-      <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
-        Account Settings
-      </h2>
-    </section>
+      <section className="flex flex-col gap-10 px-6 pt-10 lg:pt-0">
+        <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
+          Account Settings
+        </h2>
+      </section>
 
       <div className="w-full bg-inherit pt-10">
         <form
@@ -173,49 +167,80 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* CURRENT PASSWORD */}
+          <div className="flex gap-4">
             <div className="flex flex-col relative flex-grow">
               <input
-                id="password"
+                id="currentPassword"
                 onChange={handleChange}
-                name="password"
-                value={formData.password}
+                name="currentPassword"
+                value={formData.currentPassword}
                 type="password"
                 autoComplete="off"
-                className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                className="min-w-[300px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-lg text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
+                placeholder="*************"
                 // required
               />
               <label
-                htmlFor="password"
-                className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
-                  formData.password ? "label-active" : ""
-                }`}
+                htmlFor="currentPassword"
+                className="text-sm font-medium text-primary absolute left-2 top-1 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 label-active"
               >
-                Password
+                Current Password
               </label>
             </div>
+            {/* <ConfirmationModal  
+                 navigate={navigate}
+                 dispatch={dispatch}
+                 closeModal={closeModal}
+                 isOpen={isOpen}
+            /> */}
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="flex flex-col relative flex-grow">
-              <input
-                id="confirmPassword"
-                onChange={handleChange}
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                type="password"
-                autoComplete="off"
-                className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                // required
-              />
-              <label
-                htmlFor="confirmPassword"
-                className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
-                  formData.confirmPassword ? "label-active" : ""
-                }`}
-              >
-                Confirm Password
-              </label>
+          <div className="flex gap-8">
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col relative flex-grow">
+                <input
+                  id="password"
+                  onChange={handleChange}
+                  name="password"
+                  value={formData.password}
+                  type="password"
+                  autoComplete="off"
+                  className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                  // required
+                />
+                <label
+                  htmlFor="password"
+                  className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                    formData.password ? "label-active" : ""
+                  }`}
+                >
+                  Password
+                </label>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col relative flex-grow">
+                <input
+                  id="confirmPassword"
+                  onChange={handleChange}
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  type="password"
+                  autoComplete="off"
+                  className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                  // required
+                />
+                <label
+                  htmlFor="confirmPassword"
+                  className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                    formData.confirmPassword ? "label-active" : ""
+                  }`}
+                >
+                  Confirm Password
+                </label>
+              </div>
             </div>
           </div>
 
@@ -270,17 +295,12 @@ const Settings = () => {
           </h3>
         </form>
       </div>
-      <Modal
-        openModal={openModal}
+
+      <DeleteModal
+        navigate={navigate}
+        dispatch={dispatch}
         closeModal={closeModal}
         isOpen={isOpen}
-        title="Are you sure you want to delete your account?"
-        description="Type 'delete'"
-        btnText={["Yes, delete my account", "Cancel"]}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        isDeleteTyped={isDeleteTyped}
-        handleDeleteUser={handleDeleteUser}
       />
     </>
   );

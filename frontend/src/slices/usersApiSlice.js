@@ -37,6 +37,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         body: data
       }) 
+    }),
+    validateUserPassword: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/validate`,
+        method: 'POST',
+        body: data,    
+      })
     })
   }),
 });
@@ -46,5 +53,6 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useUpdateUserMutation,
-  useDeleteUserMutation
+  useDeleteUserMutation,
+  useValidateUserPasswordMutation
 } = usersApiSlice;

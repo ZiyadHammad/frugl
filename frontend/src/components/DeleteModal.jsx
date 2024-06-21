@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import {
   Dialog,
   Transition,
@@ -8,19 +8,35 @@ import {
   Input,
 } from "@headlessui/react";
 import clsx from "clsx";
+import { useDeleteUserMutation } from "../slices/usersApiSlice";
+import { clearCredentials } from "../slices/authSlice";
 
-const Modal = ({
+const DeleteModal = ({
   isOpen,
-  openModal,
   closeModal,
-  title,
-  description,
-  btnText,
-  inputValue,
-  setInputValue,
-  isDeleteTyped,
-  handleDeleteUser,
+  dispatch,
+  navigate
 }) => {
+
+  const [deleteUser] = useDeleteUserMutation();
+  const [inputValue, setInputValue] = useState("");
+  const isDeleteTyped = inputValue === "delete";
+
+  const handleDeleteUser = async () => {
+    if (!isDeleteTyped) {
+      toast("'delete' must be typed before account deletion.");
+      return;
+    }
+    try {
+      await deleteUser(userInfo.id).unwrap();
+      dispatch(clearCredentials());
+      navigate("/");
+      closeModal();
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+    }
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -52,10 +68,10 @@ const Modal = ({
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  {title}
+                  Are you sure you want to delete your account?
                 </DialogTitle>
                 <div className="mt-2 flex items-center gap-4">
-                  <p className="text-sm text-gray-500">{description}</p>
+                  <p className="text-sm text-gray-500">Type 'delete'</p>
                   <Input
                     name="delete"
                     type="text"
@@ -79,7 +95,7 @@ const Modal = ({
                     } px-4 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
                     onClick={handleDeleteUser}
                   >
-                    {btnText[0]}
+                    Yes, delete my account
                   </button>
 
                   <button
@@ -87,7 +103,7 @@ const Modal = ({
                     className=" mr-1 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-primary hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                     onClick={closeModal}
                   >
-                    {btnText[1]}
+                    Cancel
                   </button>
                 </div>
               </DialogPanel>
@@ -99,4 +115,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default DeleteModal;

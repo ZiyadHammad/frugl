@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Modal from "./Modal";
+import DeleteModal from "./DeleteModal";
 
 const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);

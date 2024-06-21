@@ -83,24 +83,6 @@ export const logout = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Logged out successfully." });
 });
 
-// @desc Get user data
-// @route GET /api/users/profile
-// @access Private
-export const getUser = asyncHandler(async (req, res) => {
-  if (!req.user._id) {
-    res.status(401);
-    throw new Error(`User is not authenticated. ${error.message}`);
-  }
-
-  const user = {
-    id: req.user._id,
-    name: `${req.user.firstName} ${req.user.lastName}`,
-    email: req.user.email,
-  };
-
-  res.status(200).json(user);
-});
-
 // @desc Update user data
 // @route PUT /api/users/profile
 // @access Private
@@ -151,5 +133,45 @@ export const deleteUser = asyncHandler(async (req, res) => {
   } else {
     res.status(404).json({ message: "User not found" });
     console.log(error.message);
+  }
+});
+
+// @desc Get user data
+// @route GET /api/users/profile
+// @access Private
+export const getUser = asyncHandler(async (req, res) => {
+  if (!req.user._id) {
+    res.status(401);
+    throw new Error(`User is not authenticated. ${error.message}`);
+  }
+
+  const user = {
+    id: req.user._id,
+    name: `${req.user.firstName} ${req.user.lastName}`,
+    email: req.user.email,
+  };
+
+  res.status(200).json(user);
+});
+
+// @desc Get user data
+// @route POST /api/users/validate
+// @access Private
+export const validateUser = asyncHandler(async (req, res) => {
+  const { currentPassword } = req.body;
+  console.log(currentPassword)
+
+  const user = await Users.findById(req.user._id);
+
+  if (user) {
+    if (await user.matchPassword(currentPassword)) {
+      res.status(200).json({ message: "Password validated successfully.", isValid: true });
+    } else {
+      res.status(401).json({ message: "Invalid Password.", isValid: false });
+      throw new Error("Invalid current password.");
+    }
+  } else {
+    res.status(404);
+    throw new Error("User not found.");
   }
 });
