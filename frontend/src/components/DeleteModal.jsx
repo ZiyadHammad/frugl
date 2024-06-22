@@ -11,13 +11,7 @@ import clsx from "clsx";
 import { useDeleteUserMutation } from "../slices/usersApiSlice";
 import { clearCredentials } from "../slices/authSlice";
 
-const DeleteModal = ({
-  isOpen,
-  closeModal,
-  dispatch,
-  navigate
-}) => {
-
+const DeleteModal = ({isOpen, setIsOpen}) => {
   const [deleteUser] = useDeleteUserMutation();
   const [inputValue, setInputValue] = useState("");
   const isDeleteTyped = inputValue === "delete";
@@ -37,7 +31,12 @@ const DeleteModal = ({
     }
   };
 
+  const closeModal = () => setIsOpen(false);
+
   return (
+<>
+
+    
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
         <TransitionChild
@@ -112,6 +111,8 @@ const DeleteModal = ({
         </div>
       </Dialog>
     </Transition>
+</>
+   
   );
 };
 

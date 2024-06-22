@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {useValidateUserPasswordMutation} from '../slices/usersApiSlice'
 import {
   Button,
   Dialog,
@@ -6,25 +7,21 @@ import {
   DialogTitle,
   Description,
 } from "@headlessui/react";
-import {useValidateUserPasswordMutation} from '../slices/usersApiSlice'
+import { useDispatch } from "react-redux";
 
-const ConfirmationModal = ({isOpen, closeModal, navigate, dispatch}) => {
+const ConfirmationModal = () => {
   const [validateUserPassword] = useValidateUserPasswordMutation();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('')
+  const dispatch = useDispatch()
 
+  const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const handleSubmit = () => {
 
-    // Simulate API call or any async operation
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setEmail("");
-      closeModal();
-    }, 2000);
-  };
+  }
 
   return (
     <>
@@ -81,8 +78,6 @@ const ConfirmationModal = ({isOpen, closeModal, navigate, dispatch}) => {
                     required
                     type="email"
                     id="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
                     placeholder="Enter your email address"
                     className="flex-1 pl-1 border-none text-gray-500 text-base focus:outline-none border border-gray-300 rounded-[27px] shadow-xs"
                   />
@@ -92,7 +87,7 @@ const ConfirmationModal = ({isOpen, closeModal, navigate, dispatch}) => {
                   type="submit"
                   className="px-5 py-3 text-white text-base font-semibold border border-secondary bg-secondary rounded-lg mt-8"
                 >
-                  {isSubmitting ? "Submitting" : "Track"}
+                  Authenticate Password
                 </Button>
               </form>
             </div>

@@ -1,17 +1,4 @@
-import { useState } from "react";
-import DeleteModal from "./DeleteModal";
-
 const SearchBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
   return (
     <>
       <div className="hidden lg:flex flex-wrap gap-4 mt-20 md:mt-12">
@@ -24,7 +11,6 @@ const SearchBar = () => {
           placeholder="Paste Amazon Product Url.."
         />
         <button
-          onClick={openModal}
           type="button"
           className="bg-gray-900 border border-gray-900 rounded-lg
         shadow-xs px-5 py-3 text-white text-base font-semibold hover:opacity-90
@@ -33,14 +19,6 @@ const SearchBar = () => {
           Go!
         </button>
       </div>
-      <Modal
-        openModal={openModal}
-        closeModal={closeModal}
-        isOpen={isOpen}
-        title="It's that Easy!"
-        description="Log In or Sign Up to Get Started!"
-        btnText='Got it!'
-      />
     </>
   );
 };

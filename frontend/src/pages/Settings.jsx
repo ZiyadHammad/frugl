@@ -17,7 +17,7 @@ const Settings = () => {
     firstName: userInfo.name.split(" ")[0],
     lastName: userInfo.name.split(" ")[1],
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   };
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -188,12 +188,7 @@ const Settings = () => {
                 Current Password
               </label>
             </div>
-            {/* <ConfirmationModal  
-                 navigate={navigate}
-                 dispatch={dispatch}
-                 closeModal={closeModal}
-                 isOpen={isOpen}
-            /> */}
+            <ConfirmationModal />
           </div>
 
           <div className="flex gap-8">
@@ -296,12 +291,7 @@ const Settings = () => {
         </form>
       </div>
 
-      <DeleteModal
-        navigate={navigate}
-        dispatch={dispatch}
-        closeModal={closeModal}
-        isOpen={isOpen}
-      />
+      <DeleteModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 };
