@@ -97,7 +97,7 @@ const Settings = () => {
       <div className="w-full bg-inherit">
         <form
           onSubmit={handleUpdateUser}
-          className="space-y-8 max-w-[1000px] py-10 px-14 lg:px-6  flex flex-col items-center md:items-start mx-auto"
+          className="space-y-8 max-w-[1000px] py-10 px-14 lg:px-6 flex flex-col items-center md:items-start "
         >
           {/* Email Field */}
           <div className="flex flex-col gap-8">
@@ -175,9 +175,9 @@ const Settings = () => {
           </div>
 
           {/* CONFIRM CURRENT PASSWORD */}
-          <div className="flex flex-col gap-8 pt-6">
-            <h1>To update your password, please authenticate</h1>
-            <div className="flex gap-8">
+          <div className="flex flex-col gap-4 md:gap-8 pt-6">
+            <h1 className="" >To update your password, please authenticate</h1>
+            <div className="flex flex-col md:flex-row gap-4 md:gap-8">
 
               <div className="flex flex-col relative flex-grow">
                 <input
@@ -187,7 +187,7 @@ const Settings = () => {
                   value={formData.currentPassword}
                   type="password"
                   autoComplete="off"
-                  className="w-full lg:min-w-[250px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-lg text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
+                  className="w-[300px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-lg text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
                 />
                 <label
                   htmlFor="currentPassword"
@@ -203,7 +203,7 @@ const Settings = () => {
           </div>
 
           {/* Password & Confirm Password */}
-          <div className="flex gap-8">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-8">
 
               <div className="flex flex-col relative flex-grow">
                 <input
@@ -213,7 +213,7 @@ const Settings = () => {
                   value={formData.password}
                   type="password"
                   autoComplete="off"
-                  className="w-full lg:min-w-[250px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                  className="w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                   disabled={!isPasswordConfirmed}
                 />
                 <label
@@ -234,7 +234,7 @@ const Settings = () => {
                   value={formData.confirmPassword}
                   type="password"
                   autoComplete="off"
-                  className="w-full lg:min-w-[250px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                  className="w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                   disabled={!isPasswordConfirmed}
                 />
                 <label
@@ -243,7 +243,7 @@ const Settings = () => {
                     formData.confirmPassword ? "label-active" : ""
                   }`}
                 >
-                  Confirm New Password
+                  Confirm Password
                 </label>
             </div>
             
@@ -275,7 +275,7 @@ const Settings = () => {
               htmlFor="notifications"
               className="text-sm font-medium text-gray-700 cursor-pointer"
             >
-              Receive notifications
+              Receive notifications?
             </label>
           </div>
 

@@ -32,7 +32,7 @@ const Authenticate = ({ currentPassword, setIsPasswordConfirmed }) => {
     <button
       onClick={handleSubmit}
       type="button"
-      className="font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-primary transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500"
+      className="w-[150px] mx-auto font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-primary transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500"
     >
       { isSubmitting ? 'Authenticating...' : 'Authenticate'}
     </button>
