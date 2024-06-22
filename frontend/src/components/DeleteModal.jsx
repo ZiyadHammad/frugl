@@ -74,7 +74,7 @@ const DeleteModal = ({isOpen, setIsOpen}) => {
                   <Input
                     name="delete"
                     type="text"
-                    placeholder="delete"
+                    placeholder="'delete'"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     className={clsx(

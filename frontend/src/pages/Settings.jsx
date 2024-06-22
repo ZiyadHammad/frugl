@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { Checkbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
@@ -25,6 +25,7 @@ const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
   const [formData, setFormData] = useState(initState);
+  const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,11 +42,6 @@ const Settings = () => {
     setIsBlurred(true);
   };
 
-  function closeModal() {
-    setIsOpen(false);
-    setInputValue("");
-  }
-
   function openModal() {
     setIsOpen(true);
   }
@@ -53,6 +49,10 @@ const Settings = () => {
   const handleUpdateUser = async (e) => {
     e.preventDefault();
     const { lastName, firstName, password, confirmPassword } = formData;
+
+    if (!isPasswordConfirmed) {
+      return
+    }
 
     if (password !== confirmPassword) {
       toast("Passwords do not match.");
@@ -167,8 +167,8 @@ const Settings = () => {
             </div>
           </div>
 
-          {/* CURRENT PASSWORD */}
-          <div className="flex gap-4">
+          {/* CONFIRM CURRENT PASSWORD */}
+          <div className="flex gap-8">
             <div className="flex flex-col relative flex-grow">
               <input
                 id="currentPassword"
@@ -179,7 +179,7 @@ const Settings = () => {
                 autoComplete="off"
                 className="min-w-[300px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-lg text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
                 placeholder="*************"
-                // required
+                disabled
               />
               <label
                 htmlFor="currentPassword"
@@ -188,9 +188,10 @@ const Settings = () => {
                 Current Password
               </label>
             </div>
-            <ConfirmationModal />
+            <ConfirmationModal setIsPasswordConfirmed={setIsPasswordConfirmed} />
           </div>
 
+          {/* Password & Confirm Password */}
           <div className="flex gap-8">
             <div className="flex items-center gap-4">
               <div className="flex flex-col relative flex-grow">
@@ -202,11 +203,11 @@ const Settings = () => {
                   type="password"
                   autoComplete="off"
                   className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                  // required
+                  disabled={!isPasswordConfirmed}
                 />
                 <label
                   htmlFor="password"
-                  className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                  className={`text-sm font-medium text-gray-500 absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
                     formData.password ? "label-active" : ""
                   }`}
                 >
@@ -225,11 +226,11 @@ const Settings = () => {
                   type="password"
                   autoComplete="off"
                   className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                  // required
+                  disabled={!isPasswordConfirmed}
                 />
                 <label
                   htmlFor="confirmPassword"
-                  className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                  className={`text-sm font-medium text-gray-500 absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
                     formData.confirmPassword ? "label-active" : ""
                   }`}
                 >
@@ -238,7 +239,7 @@ const Settings = () => {
               </div>
             </div>
           </div>
-
+                      {/* Notifications & delete account */}
           <div className="flex flex-row relative gap-2 items-center">
             <Checkbox
               checked={formData.notifications}
