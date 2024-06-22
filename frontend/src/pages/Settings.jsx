@@ -1,5 +1,4 @@
-import { useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Checkbox } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/16/solid";
 import { toast } from "react-toastify";
@@ -8,7 +7,7 @@ import { useUpdateUserMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 
 import DeleteModal from "../components/DeleteModal";
-import ConfirmationModal from "../components/ConfirmationModal";
+import Authenticate from "../components/Authenticate";
 import Loader from "../components/Loader";
 
 const Settings = () => {
@@ -16,11 +15,11 @@ const Settings = () => {
   const initState = {
     firstName: userInfo.name.split(" ")[0],
     lastName: userInfo.name.split(" ")[1],
+    currentPassword: "",
     password: "",
     confirmPassword: "",
   };
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(false);
@@ -51,7 +50,7 @@ const Settings = () => {
     const { lastName, firstName, password, confirmPassword } = formData;
 
     if (!isPasswordConfirmed) {
-      return
+      return;
     }
 
     if (password !== confirmPassword) {
@@ -79,27 +78,30 @@ const Settings = () => {
       dispatch(setCredentials(userInfo));
       toast("Account Successfully Updated!");
     } catch (error) {
-      console.error("Failed to delete user:", error);
+      console.error("Failed to update user:", error);
     }
   };
 
   if (isLoading) {
     return <Loader />;
   }
+
   return (
     <>
-      <section className="flex flex-col gap-10 px-6 pt-10 lg:pt-0">
+      <section className="flex flex-col gap-10 px-14 lg:px-6 pt-10 lg:pt-0">
         <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
           Account Settings
         </h2>
       </section>
 
-      <div className="w-full bg-inherit pt-10">
+      <div className="w-full bg-inherit">
         <form
           onSubmit={handleUpdateUser}
-          className="space-y-8 max-w-[1000px] py-10 px-6 flex flex-col items-center md:items-start "
+          className="space-y-8 max-w-[1000px] py-10 px-14 lg:px-6  flex flex-col items-center md:items-start mx-auto"
         >
-          <div className="flex items-center gap-4">
+          {/* Email Field */}
+          <div className="flex flex-col gap-8">
+            <h2>Your Email Address</h2>
             <div className="flex flex-col relative flex-grow">
               <input
                 name="email"
@@ -108,7 +110,7 @@ const Settings = () => {
                 type="email"
                 autoComplete="off"
                 readOnly
-                className="min-w-[300px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none py-1 pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-md text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
+                className="w-[300px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none py-1 pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-md text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
                 required
               />
               <label
@@ -122,78 +124,87 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-8 md:flex-row">
-            <div className="flex flex-col relative">
-              <input
-                onChange={handleChange}
-                name="firstName"
-                value={formData.firstName}
-                type="text"
-                id="firstName"
-                autoComplete="off"
-                className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                required
-              />
+          {/* First & Last Name */}
+          <div className="flex flex-col gap-8">
+            <h2>What is your name?</h2>
 
-              <label
-                htmlFor="firstName"
-                className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
-                  formData.firstName ? "label-active" : ""
-                }`}
-              >
-                First Name
-              </label>
-            </div>
+            <div className="flex flex-col gap-8 md:flex-row">
+              <div className="flex flex-col relative">
+                <input
+                  onChange={handleChange}
+                  name="firstName"
+                  value={formData.firstName}
+                  type="text"
+                  id="firstName"
+                  autoComplete="off"
+                  className="w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                  required
+                />
 
-            <div className="flex flex-col relative">
-              <input
-                onChange={handleChange}
-                name="lastName"
-                value={formData.lastName}
-                type="text"
-                id="lastName"
-                autoComplete="off"
-                className="min-w-[300px] border-2 rounded-lg pl-2 focus:outline-none py-1 focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                required
-              />
-              <label
-                htmlFor="lastName"
-                className={`text-sm font-medium text-primary absolute left-3 top-2 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
-                  formData.lastName ? "label-active" : ""
-                }`}
-              >
-                Last Name
-              </label>
+                <label
+                  htmlFor="firstName"
+                  className={`text-sm font-medium text-primary absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
+                    formData.firstName ? "label-active" : ""
+                  }`}
+                >
+                  First Name
+                </label>
+              </div>
+
+              <div className="flex flex-col relative">
+                <input
+                  onChange={handleChange}
+                  name="lastName"
+                  value={formData.lastName}
+                  type="text"
+                  id="lastName"
+                  autoComplete="off"
+                  className="w-[300px] border-2 rounded-lg pl-2 focus:outline-none py-1 focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                  required
+                />
+                <label
+                  htmlFor="lastName"
+                  className={`text-sm font-medium text-primary absolute left-3 top-2 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 ${
+                    formData.lastName ? "label-active" : ""
+                  }`}
+                >
+                  Last Name
+                </label>
+              </div>
             </div>
           </div>
 
           {/* CONFIRM CURRENT PASSWORD */}
-          <div className="flex gap-8">
-            <div className="flex flex-col relative flex-grow">
-              <input
-                id="currentPassword"
-                onChange={handleChange}
-                name="currentPassword"
-                value={formData.currentPassword}
-                type="password"
-                autoComplete="off"
-                className="min-w-[300px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-lg text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
-                placeholder="*************"
-                disabled
-              />
-              <label
-                htmlFor="currentPassword"
-                className="text-sm font-medium text-primary absolute left-2 top-1 cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-4 transition-all duration-200 label-active"
-              >
-                Current Password
-              </label>
+          <div className="flex flex-col gap-8 pt-6">
+            <h1>To update your password, please authenticate</h1>
+            <div className="flex gap-8">
+
+              <div className="flex flex-col relative flex-grow">
+                <input
+                  id="currentPassword"
+                  onChange={handleChange}
+                  name="currentPassword"
+                  value={formData.currentPassword}
+                  type="password"
+                  autoComplete="off"
+                  className="w-full lg:min-w-[250px] border-2 border-gray-300 h-[40px] bg-gray-50 rounded-lg focus:outline-none pl-2 transition-colors peer duration-200 cursor-not-allowed opacity-50 text-lg text-gray-900 placeholder-gray-500 disabled:text-gray-500 disabled:placeholder-gray-500"
+                />
+                <label
+                  htmlFor="currentPassword"
+                  className={`text-sm font-medium text-gray-500 absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                    formData.currentPassword ? "label-active" : ""
+                  }`}
+                >
+                  Current Password
+                </label>
+              </div>
+              <Authenticate currentPassword={formData.currentPassword} setIsPasswordConfirmed={setIsPasswordConfirmed} />
             </div>
-            <ConfirmationModal setIsPasswordConfirmed={setIsPasswordConfirmed} />
           </div>
 
           {/* Password & Confirm Password */}
           <div className="flex gap-8">
-            <div className="flex items-center gap-4">
+
               <div className="flex flex-col relative flex-grow">
                 <input
                   id="password"
@@ -202,7 +213,7 @@ const Settings = () => {
                   value={formData.password}
                   type="password"
                   autoComplete="off"
-                  className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                  className="w-full lg:min-w-[250px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                   disabled={!isPasswordConfirmed}
                 />
                 <label
@@ -211,12 +222,10 @@ const Settings = () => {
                     formData.password ? "label-active" : ""
                   }`}
                 >
-                  Password
+                  New Password
                 </label>
               </div>
-            </div>
-
-            <div className="flex items-center gap-4">
+          
               <div className="flex flex-col relative flex-grow">
                 <input
                   id="confirmPassword"
@@ -225,7 +234,7 @@ const Settings = () => {
                   value={formData.confirmPassword}
                   type="password"
                   autoComplete="off"
-                  className="min-w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                  className="w-full lg:min-w-[250px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
                   disabled={!isPasswordConfirmed}
                 />
                 <label
@@ -234,12 +243,13 @@ const Settings = () => {
                     formData.confirmPassword ? "label-active" : ""
                   }`}
                 >
-                  Confirm Password
+                  Confirm New Password
                 </label>
-              </div>
             </div>
+            
           </div>
-                      {/* Notifications & delete account */}
+
+          {/* Notifications */}
           <div className="flex flex-row relative gap-2 items-center">
             <Checkbox
               checked={formData.notifications}
@@ -249,13 +259,27 @@ const Settings = () => {
                   notifications: !prevState.notifications,
                 }))
               }
-              className="group size-6 rounded-md bg-gray-400 p-1 ring-1 ring-gray-400 data-[checked]:ring-secondary ring-inset data-[checked]:bg-white"
+              className="group size-[1.25rem]"
             >
-              <CheckIcon className="hidden size-4 fill-black group-data-[checked]:block" />
+              {({ checked }) => (
+                <>
+                  <div className="w-[1.25rem] h-[1.25rem] border-2 rounded-md flex items-center justify-center bg-gray-50 border-gray-300 transition-colors peer checked:bg-secondary checked:border-transparent checked:ring-2 checked:ring-secondary">
+                    {checked && (
+                      <CheckIcon className="w-[1rem] h-[1rem] text-white" />
+                    )}
+                  </div>
+                </>
+              )}
             </Checkbox>
-            <h1>I'd like to receive product updates</h1>
+            <label
+              htmlFor="notifications"
+              className="text-sm font-medium text-gray-700 cursor-pointer"
+            >
+              Receive notifications
+            </label>
           </div>
 
+          {/* Cancel & Save Buttons */}
           <div className="flex items-center gap-8">
             <button
               onClick={handleCancel}
@@ -263,7 +287,7 @@ const Settings = () => {
               disabled={isBlurred}
               className={`${
                 isBlurred ? "cursor-not-allowed" : "hover:bg-indigo-100"
-              } w-[100px] font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-primary bg-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+              } w-auto md:w-[100px] font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-primary bg-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
             >
               Cancel
             </button>
@@ -273,14 +297,15 @@ const Settings = () => {
                 isBlurred
                   ? "bg-secondary-300 cursor-not-allowed"
                   : "hover:bg-secondary-700 bg-secondary"
-              } w-[100px] font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500`}
+              } w-auto md:w-[100px] font-spaceGrotesk flex justify-center py-2 px-4 border-2 rounded-lg shadow-sm text-sm font-medium text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary-500`}
               disabled={isBlurred}
             >
               Save
             </button>
           </div>
 
-          <h3 className="text-primary font-spaceGrotesk text-center md:text-start">
+          {/* Delete Account Prompt */}
+          <h3 className="text-primary font-spaceGrotesk text-center md:text-start pt-10">
             If you would like to delete your account,{" "}
             <span
               className="text-secondary font-bold cursor-pointer"
@@ -291,7 +316,6 @@ const Settings = () => {
           </h3>
         </form>
       </div>
-
       <DeleteModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
