@@ -19,21 +19,20 @@ const ProductDetail = () => {
         Details
       </h2>
 
-      <div className="flex gap-20 flex-col items-center xl:items-start xl:flex-row xl:justify-evenly">
+      <div className="flex flex-col items-center justify-between gap-10 xl:items-start xl:flex-row xl:px-20">
 
-        <div className="hidden xl:flex max-h-[600px] max-w-[600px] pt-16 border border-[#CDDBFF] rounded-[17px]">
+        <div className="hidden xl:flex p-10 border border-[#CDDBFF] rounded-[17px]">
           <img
             src={product.image}
             alt={product.title}
-            className="max-h-[300px] max-w-[300px]  lg:max-w-[600px] lg:max-h-[600px]"
+            className="object-contain min-h-[400px] min-w-[350px] max-h-[500px] max-w-[350px]"
           />
         </div>
 
-        <div className="flex-1 flex flex-col px-10 xl:px-0 max-w-[600px]">
+        <div className="flex-1 flex flex-col px-10 xl:px-0 xl:max-w-[400px]">
           <div className="flex justify-between items-start gap-5 flex-wrap pb-6">
             
             <div className="flex flex-col gap-3">
-
               <p className="text-[22px] text-secondary font-semibold">
                 {product.title}
               </p>
@@ -66,6 +65,14 @@ const ProductDetail = () => {
             </div>
 
           </div>
+
+          <div className="xl:hidden mb-8 min-w-[350px] p-14 border border-[#CDDBFF] rounded-[17px] mx-auto">
+            <img
+              src={product.image}
+              alt={product.title}
+              className="max-h-[300px] max-w-[300px] lg:max-w-[600px] lg:max-h-[600px] mx-auto"
+            />
+        </div>
 
           {/* Product-Info */}
           <div className="flex items-center flex-wrap gap-10 py-6 border-y border-y-[#E4E4E4]">
@@ -103,17 +110,11 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          <div className="xl:hidden max-h-[600px] max-w-[600px] pt-16 border border-[#CDDBFF] rounded-[17px]">
-          <img
-            src={product.image}
-            alt={product.title}
-            className="max-h-[300px] max-w-[300px]  lg:max-w-[600px] lg:max-h-[600px] mx-auto"
-          />
-        </div>
+        
 
 
           <div className="my-7 flex flex-col"> 
-            <div className="flex gap-5 flex-wrap">
+            <div className="flex gap-4 flex-wrap">
               <ProductCardInfo
                 title="Current Price"
                 iconSrc="/assets/icons/price-tag.svg"

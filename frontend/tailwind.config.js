@@ -9,6 +9,7 @@ export default {
       'sm': '320px',
       'md': '768px',
       'lg': '1024px',
+      'lg1': '',
       'xl': '1300px',
     },
     extend: {
