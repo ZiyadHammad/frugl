@@ -12,7 +12,7 @@ const Navbar = () => {
   const handleMenuClose = () => setMenuOpen(false);
 
   return (
-    <header className="w-full h-[60px] bg-white shadow-custom-shadow relative z-10">
+    <header className="w-full h-[60px]relative z-10 pt-10">
       <nav className="flex max-w-10xl h-full justify-between items-center mx-auto px-6 md:px-20">
         <NavLink to="/" className="flex items-center gap-2">
           <img
@@ -92,7 +92,7 @@ const Navbar = () => {
         <AnimatePresence>
           {menuOpen && (
             <motion.div
-              className="lg:hidden absolute top-14 right-0 w-full h-[100vh] bg-theme shadow-lg z-50"
+              className="lg:hidden absolute top-10 right-0 w-full h-[100vh] bg-theme shadow-lg z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="rounded-lg m-4">
-      <div className="w-full max-w-screen-xl mx-auto p-4">
+    <footer className="w-full max-w-screen-xl mx-auto p-4">
+      
         <div className="sm:flex sm:items-center sm:justify-between">
           <Link
             href="/"
@@ -35,7 +35,6 @@ const Footer = () => {
           </Link>
           . All Rights Reserved.
         </span>
-      </div>
     </footer>
   );
 };

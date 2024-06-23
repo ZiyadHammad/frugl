@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 
 const MainLayout = () => {
   return (
-    <div className="w-full">
+    <div className="bg-theme min-h-[100vh]">
       <Navbar />
       <ToastContainer />
       <Outlet />

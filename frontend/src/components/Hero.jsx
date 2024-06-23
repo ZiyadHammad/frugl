@@ -1,5 +1,4 @@
 import HeroCarousel from "./HeroCarousel";
-import SearchBar from "./SearchBar";
 
 const Hero = () => {
   return (
@@ -15,7 +14,6 @@ const Hero = () => {
             you when prices drop, items go out of stock, or when there's a
             significant discount!
           </p>
-          <SearchBar />
         </div>
 
         <HeroCarousel />

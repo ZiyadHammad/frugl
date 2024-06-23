@@ -88,13 +88,13 @@ const Settings = () => {
 
   return (
     <>
-      <section className="flex flex-col gap-10 px-14 lg:px-6 pt-10 lg:pt-0">
+      <section className="bg-[#f2f2f2] h-[150px] border-b p-10">
         <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
           Account Settings
         </h2>
       </section>
 
-      <div className="w-full bg-inherit">
+      <div className="w-full bg-inherit p-10">
         <form
           onSubmit={handleUpdateUser}
           className="space-y-8 max-w-[1000px] py-10 px-14 lg:px-6 flex flex-col items-center md:items-start "
@@ -176,9 +176,8 @@ const Settings = () => {
 
           {/* CONFIRM CURRENT PASSWORD */}
           <div className="flex flex-col gap-4 md:gap-8 pt-6">
-            <h1 className="" >To update your password, please authenticate</h1>
+            <h1 className="">To update your password, please authenticate</h1>
             <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-
               <div className="flex flex-col relative flex-grow">
                 <input
                   id="currentPassword"
@@ -198,55 +197,56 @@ const Settings = () => {
                   Current Password
                 </label>
               </div>
-              <Authenticate currentPassword={formData.currentPassword} setIsPasswordConfirmed={setIsPasswordConfirmed} />
+              <Authenticate
+                currentPassword={formData.currentPassword}
+                setIsPasswordConfirmed={setIsPasswordConfirmed}
+              />
             </div>
           </div>
 
           {/* Password & Confirm Password */}
           <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-
-              <div className="flex flex-col relative flex-grow">
-                <input
-                  id="password"
-                  onChange={handleChange}
-                  name="password"
-                  value={formData.password}
-                  type="password"
-                  autoComplete="off"
-                  className="w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                  disabled={!isPasswordConfirmed}
-                />
-                <label
-                  htmlFor="password"
-                  className={`text-sm font-medium text-gray-500 absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
-                    formData.password ? "label-active" : ""
-                  }`}
-                >
-                  New Password
-                </label>
-              </div>
-          
-              <div className="flex flex-col relative flex-grow">
-                <input
-                  id="confirmPassword"
-                  onChange={handleChange}
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  type="password"
-                  autoComplete="off"
-                  className="w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
-                  disabled={!isPasswordConfirmed}
-                />
-                <label
-                  htmlFor="confirmPassword"
-                  className={`text-sm font-medium text-gray-500 absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
-                    formData.confirmPassword ? "label-active" : ""
-                  }`}
-                >
-                  Confirm Password
-                </label>
+            <div className="flex flex-col relative flex-grow">
+              <input
+                id="password"
+                onChange={handleChange}
+                name="password"
+                value={formData.password}
+                type="password"
+                autoComplete="off"
+                className="w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                disabled={!isPasswordConfirmed}
+              />
+              <label
+                htmlFor="password"
+                className={`text-sm font-medium text-gray-500 absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                  formData.password ? "label-active" : ""
+                }`}
+              >
+                New Password
+              </label>
             </div>
-            
+
+            <div className="flex flex-col relative flex-grow">
+              <input
+                id="confirmPassword"
+                onChange={handleChange}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                type="password"
+                autoComplete="off"
+                className="w-[300px] border-2 rounded-lg pl-2 py-1 focus:outline-none focus:border-secondary focus:border-b-2 transition-colors peer duration-200"
+                disabled={!isPasswordConfirmed}
+              />
+              <label
+                htmlFor="confirmPassword"
+                className={`text-sm font-medium text-gray-500 absolute left-3 top-2  cursor-text peer-focus:text-secondary peer-focus:text-xs peer-focus:-top-5 transition-all duration-200 ${
+                  formData.confirmPassword ? "label-active" : ""
+                }`}
+              >
+                Confirm Password
+              </label>
+            </div>
           </div>
 
           {/* Notifications */}
@@ -271,10 +271,7 @@ const Settings = () => {
                 </>
               )}
             </Checkbox>
-            <label
-              htmlFor="notifications"
-              className="text-sm font-medium text-gray-700 cursor-pointer"
-            >
+            <label className="text-sm font-medium text-gray-700 cursor-pointer">
               Receive notifications?
             </label>
           </div>
