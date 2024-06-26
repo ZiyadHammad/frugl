@@ -1,23 +1,29 @@
-import { useSelector } from "react-redux";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useGetItemsMutation } from "../slices/itemsApiSlice";
+import { setItems } from "../slices/itemSlice";
+
+import Loader from "../components/Loader";
 import ProductCard from "../components/ProductCard";
 
 const MyProducts = () => {
+  const { userInfo } = useSelector((state) => state.auth);
   const { userProducts } = useSelector((state) => state.items);
+  const [getItems, { isLoading }] = useGetItemsMutation();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const fetchProducts = async (userId) => {
+      const response = await getItems(userId).unwrap();
 
-  // const categories = [
-  //   {
-  //     name: 'All Products',
-  //     products: userProducts
-  //   },
-  //   {
-  //     name: 'Price Alerts',
-  //     products: userProducts    // add priceAlert Field to productSchema
-  //   }
-  // ]
+      dispatch(setItems(response));
+    };
+    fetchProducts(userInfo.id);
+  }, [getItems, dispatch, userInfo._id]);
 
-  // console.log(categories)
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="flex flex-col gap-10 px-6 pt-10 lg:pt-0">
@@ -25,25 +31,9 @@ const MyProducts = () => {
         My Products
       </h2>
 
-      {/* <TabGroup>
-        <TabList>
-          {categories.map(({ name, products }) => (
-            <TabPanel key={name} >
-              <ul>
-                {products.map(p => (
-                  
-                ))}
-              </ul>
-              </TabPanel>
-            ))}
-        </TabList>
-
-      </TabGroup> */}
-
       <div className="flex flex-wrap gap-x-8 gap-y-16 justify-center md:justify-start">
         {userProducts.length ? (
           userProducts.map((product) => (
-            
             <ProductCard key={product._id} product={product} />
           ))
         ) : (

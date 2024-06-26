@@ -94,7 +94,7 @@ export const updateItemTitle = asyncHandler(async (req, res) => {
 // @access Private
 export const deleteItem = asyncHandler(async (req, res) => {
   const itemId = req.params.id;
-  
+  console.log(req.params.id)
   const item = await Items.findById(itemId);
 
   if (!item) {

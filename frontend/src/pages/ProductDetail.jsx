@@ -1,8 +1,10 @@
-import { Link, useParams, useOutletContext } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 import Loader from "../components/Loader";
 import ProductCardInfo from "../components/ProductCardInfo";
 import TrackProductModal from "../components/TrackProductModal";
+import DeleteProductModal from "../components/DeleteProductModal";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -12,14 +14,16 @@ const ProductDetail = () => {
   if (!product) {
     return <Loader />;
   }
-console.log(userProducts)
+
   return (
     <div className="flex flex-col gap-16 pt-10 xl:pt-0 bg-theme">
+
       <h2 className="text-primary text-[32px] font-semibold text-center xl:text-start lg:border-b">
         Details
       </h2>
 
       <div className="flex flex-col items-center justify-evenly gap-10 xl:items-start xl:flex-row xl:px-10">
+
         <div className="hidden xl:flex p-10 bg-white border border-[#CDDBFF] rounded-[17px]">
           <img
             src={product.image}
@@ -60,10 +64,14 @@ console.log(userProducts)
               <div className="p-2 bg-[#EDF0F8] rounded-10">
                 <img src="/assets/icons/share.svg" alt="share" />
               </div>
+
+              <DeleteProductModal />
+              
             </div>
           </div>
 
-          <div className="xl:hidden mb-8 min-w-[350px] p-14 border border-[#CDDBFF] rounded-[17px] mx-auto">
+
+          <div className="xl:hidden mb-8 min-w-[350px] p-14 bg-white border border-[#CDDBFF] rounded-[17px] mx-auto">
             <img
               src={product.image}
               alt={product.title}
@@ -97,6 +105,9 @@ console.log(userProducts)
                 <div className="p-2 bg-[#EDF0F8] rounded-10">
                   <img src="/assets/icons/share.svg" alt="share" />
                 </div>
+
+                <DeleteProductModal />
+
               </div>
             </div>
           </div>
@@ -179,7 +190,11 @@ console.log(userProducts)
         <button className="py-4 px-4 bg-secondary hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold w-fit mx-auto flex items-center justify-center gap-3 min-w-[200px]">
           <img src="/assets/icons/bag.svg" alt="check" className="h-6 w-6" />
 
-          <a href={product.url} target="_blank" className="text-base text-white">
+          <a
+            href={product.url}
+            target="_blank"
+            className="text-base text-white"
+          >
             Buy Now
           </a>
         </button>

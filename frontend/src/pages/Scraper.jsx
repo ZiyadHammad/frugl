@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useCreateItemMutation } from "../slices/itemsApiSlice";
-// import { setItems } from "../slices/itemSlice";
 
 import Loader from "../components/Loader";
 import Scene from "../components/Canvas/Scene";
@@ -17,8 +16,6 @@ const Scraper = () => {
     e.preventDefault();
 
     const response = await createItem({ url: productUrl }).unwrap();
-    console.log(response);
-    // dispatch(setItems())
     navigate("/products");
     try {
     } catch (error) {
@@ -32,13 +29,11 @@ const Scraper = () => {
 
   return (
     <div className="bg-theme h-screen w-full p-10">
-
-        <h2 className="text-primary text-[32px] font-semibold text-center lg:text-start border-b">
-          Scraper
-        </h2>
+      <h2 className="text-primary text-[32px] font-semibold text-center lg:text-start border-b">
+        Scraper
+      </h2>
 
       <div className="border bg-white rounded-xl max-w-[600px] mt-20 mx-auto shadow-md border-gray-200 p-6">
-
         <div className="min-h-[250px] flex items-center">
           <Scene />
         </div>
@@ -73,11 +68,8 @@ const Scraper = () => {
               Start Extraction
             </button>
           </div>
-
         </form>
       </div>
-
-
     </div>
   );
 };
