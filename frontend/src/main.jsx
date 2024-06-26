@@ -10,6 +10,7 @@ import ChildLayout from "./layouts/ChildLayout";
 
 import PrivateRoute from "./utils/PrivateRoute.jsx";
 import NotFound from './pages/NotFound.jsx'
+import Cron from './pages/Cron.jsx'
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "contact",
         element: <Contact />,
+      },
+      {
+        path: "cron",
+        element: <Cron />,
       }
     ]
   },

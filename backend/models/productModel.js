@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const itemSchema = mongoose.Schema(
+const productSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -64,6 +64,6 @@ const itemSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Items = mongoose.model("Items", itemSchema, "Items");
+const Products = mongoose.model("Products", productSchema, "Products");
 
-export default Items;
+export default Products;

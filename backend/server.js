@@ -7,7 +7,7 @@ import 'colors'
 import {errorHandler, notFound} from './middleware/errorMiddleware.js'
 import {connectDB} from './config/mongoDB.js'
 import userRoutes from './routes/userRoutes.js'
-import itemRoutes from './routes/itemRoutes.js'
+import productRoutes from './routes/productRoutes.js'
 
 dotenv.config()
 const port = process.env.PORT || 7000
@@ -33,7 +33,11 @@ app.use(express.urlencoded({extended: true}))
 
 // Routes
 app.use('/api/users', userRoutes)
-app.use('/api/items', itemRoutes)
+app.use('/api/products', productRoutes)
+
+app.get('/', (req, res) => {
+  res.status(200).json({message: "Test: It's working"})
+})
 
 // Error Middleware
 app.use(notFound)

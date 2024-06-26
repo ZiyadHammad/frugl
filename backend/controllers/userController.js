@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import genToken from "../utils/genToken.js";
 import Users from "../models/userModel.js";
-import Items from "../models/itemModel.js";
+import Products from "../models/productModel.js";
 
 // @desc Register a new user
 // @route POST /api/users/register
@@ -120,10 +120,10 @@ export const deleteUser = asyncHandler(async (req, res) => {
   }
 
   const userId = req.user._id;
-  const items = await Items.find({ userId });
+  const products = await Products.find({ userId });
   console.log(userId, { userId });
-  if (items.length > 0) {
-    await Items.deleteMany({ userId });
+  if (products.length > 0) {
+    await Products.deleteMany({ userId });
   }
 
   const user = await Users.findByIdAndDelete(req.user._id);

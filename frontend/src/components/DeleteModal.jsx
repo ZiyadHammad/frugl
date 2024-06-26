@@ -10,19 +10,23 @@ import {
 import clsx from "clsx";
 import { useDeleteUserMutation } from "../slices/usersApiSlice";
 import { clearCredentials } from "../slices/authSlice";
+import { useSelector, useDispatch } from "react-redux";
 
-const DeleteModal = ({isOpen, setIsOpen}) => {
+const DeleteModal = ({ isOpen, setIsOpen }) => {
+  const { userInfo } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
   const [deleteUser] = useDeleteUserMutation();
   const [inputValue, setInputValue] = useState("");
   const isDeleteTyped = inputValue === "delete";
-
+  console.log({ _id: userInfo.id })
+  
   const handleDeleteUser = async () => {
     if (!isDeleteTyped) {
       toast("'delete' must be typed before account deletion.");
       return;
     }
     try {
-      await deleteUser(userInfo.id).unwrap();
+      await deleteUser().unwrap();
       dispatch(clearCredentials());
       navigate("/");
       closeModal();

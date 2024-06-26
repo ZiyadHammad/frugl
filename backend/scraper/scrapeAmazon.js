@@ -3,7 +3,7 @@ import * as cheerio from "cheerio";
 
 import { extractDesc, extractOriginalPrice } from "../utils/amazonParser.js";
 
-export const scrapeAmazonItem = async (url) => {
+export const scrapeAmazonProduct = async (url) => {
   if (!url) return "No url provided to scrape";
 
   const brightDataConfig = {
@@ -80,8 +80,3 @@ export const scrapeAmazonItem = async (url) => {
     throw new Error(`Failed attempting to scrape. Error: ${error.message}`);
   }
 };
-
-// This is for testing purposes
-// scrapeAmazonItem(url)
-//   .then((data) => console.log(data))
-//   .catch((err) => console.error(err.message));

@@ -4,11 +4,11 @@ const initialState = {
   userProducts: localStorage.getItem("userProducts") ? JSON.parse(localStorage.getItem("userProducts")) : null
 };
 
-const itemSlice = createSlice({
-  name: "items",
+const productSlice = createSlice({
+  name: "products",
   initialState,
   reducers: {
-    setItems: (state, action) => {
+    setProducts: (state, action) => {
       state.userProducts = action.payload;
       localStorage.setItem("userProducts", JSON.stringify(action.payload));
     },
@@ -16,7 +16,7 @@ const itemSlice = createSlice({
       state.userProducts = null
       localStorage.removeItem('userProducts')
     },
-    updateItem: (state, action) => { },
+    updateProductById: (state, action) => { },
     deleteProductById: (state, action) => {
       const productId = action.payload;
       state.userProducts = state.userProducts.filter(
@@ -27,6 +27,6 @@ const itemSlice = createSlice({
   },
 });
 
-export const { setItems, clearProducts, deleteProductById } = itemSlice.actions;
+export const { setProducts, clearProducts, deleteProductById } = productSlice.actions;
 
-export default itemSlice.reducer;
+export default productSlice.reducer;

@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useCreateItemMutation } from "../slices/itemsApiSlice";
+import { useCreateProductMutation } from "../slices/productsApiSlice";
 
 import Loader from "../components/Loader";
 import Scene from "../components/Canvas/Scene";
 
 const Scraper = () => {
   const [productUrl, setProductUrl] = useState("");
-  const [createItem, { isLoading }] = useCreateItemMutation();
+  const [createProduct, { isLoading }] = useCreateProductMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await createItem({ url: productUrl }).unwrap();
+    const response = await createProduct({ url: productUrl }).unwrap();
     navigate("/products");
     try {
     } catch (error) {

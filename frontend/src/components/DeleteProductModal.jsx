@@ -7,18 +7,18 @@ import {
 } from "@headlessui/react";
 import clsx from "clsx";
 import { Fragment, useState } from "react";
-import { useDeleteItemMutation } from "../slices/itemsApiSlice";
+import { useDeleteProductMutation } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { deleteProductById } from "../slices/itemSlice";
+import { deleteProductById } from "../slices/productSlice";
 import { useDispatch } from "react-redux";
 
 const DeleteProductModal = () => {
   const { productId } = useParams();
   const dispatch = useDispatch ()
   const navigate = useNavigate();
-  const [deleteItem, { isLoading }] = useDeleteItemMutation();
+  const [deleteProduct, { isLoading }] = useDeleteProductMutation();
   const [isOpen, setIsOpen] = useState(false);
   
   const closeModal = () => setIsOpen(false);
@@ -26,7 +26,7 @@ const DeleteProductModal = () => {
 
   const handleDeleteProduct = async () => {
     try {
-      const response = await deleteItem(productId);
+      const response = await deleteProduct(productId);
       console.log(response);
       dispatch(deleteProductById(productId));
       closeModal();

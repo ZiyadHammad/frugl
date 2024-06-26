@@ -8,8 +8,10 @@ import DeleteProductModal from "../components/DeleteProductModal";
 
 const ProductDetail = () => {
   const { productId } = useParams();
-  const { userProducts } = useSelector((state) => state.items);
+  const { userProducts } = useSelector((state) => state.products);
   const product = userProducts.find((p) => p._id === productId);
+  
+  console.log(product)
 
   if (!product) {
     return <Loader />;

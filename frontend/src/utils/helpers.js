@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { clearCredentials } from "../slices/authSlice";
-import { clearProducts } from "../slices/itemSlice";
+import { clearProducts } from "../slices/productSlice";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const useSignOut = () => {
   const handleSignOut = async () => {
     try {
       await logout().unwrap();
-      dispatch(clearProducts());
+      // dispatch(clearProducts());
       dispatch(clearCredentials());
       navigate('/');
     } catch (err) {
