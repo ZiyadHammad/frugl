@@ -1,3 +1,4 @@
+import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
@@ -35,9 +36,14 @@ app.use(express.urlencoded({extended: true}))
 app.use('/api/users', userRoutes)
 app.use('/api/products', productRoutes)
 
-app.get('/', (req, res) => {
-  res.status(200).json({message: "Test: It's working"})
-})
+if (process.env.NODE_ENV === 'production') {
+  const __dirname = path.resolve()
+  app.use(express.static(path.join(__dirname, 'frontend/dist')))
+
+  app.get('*', (req,res) => res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html')))
+} else {
+  app.get('/', (req, res) => res.send('Server is Ready!'))
+}
 
 // Error Middleware
 app.use(notFound)
