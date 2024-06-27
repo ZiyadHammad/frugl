@@ -1,7 +1,7 @@
 {
   "name": "frugl",
   "version": "1.0.0",
-  "description": "",
+  "description": "Amazon Web Scraper",
   "main": "index.js",
   "type": "module",
   "scripts": {
