@@ -21,7 +21,7 @@ const app = express()
 
 // cross origin requests
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.NODE_ENV === production ? 'https://frugl.onrender.com/' : 'http://localhost:3000',
   credentials: true // Allow credentials (cookies)
 }))
 
