@@ -114,6 +114,8 @@ export const updateUser = asyncHandler(async (req, res) => {
 // @route DELETE /api/users/profile
 // @access Private
 export const deleteUser = asyncHandler(async (req, res) => {
+  
+  console.log(req.user._id)
   if (!req.user._id) {
     res.status(401);
     throw new Error(`User is not authenticated. ${error.message}`);

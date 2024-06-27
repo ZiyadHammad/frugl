@@ -25,6 +25,8 @@ const MyProducts = () => {
     return <Loader />;
   }
 
+  console.log(userProducts)
+
   return (
     <section className="flex flex-col gap-10 px-6 pt-10 lg:pt-0">
       <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">

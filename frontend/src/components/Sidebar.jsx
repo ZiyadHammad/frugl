@@ -36,6 +36,10 @@ const Sidebar = () => {
   const { handleSignOut } = useSignOut();
   const handleMenuClose = () => setMenuOpen(false);
 
+  if (!userInfo) {
+    return null; 
+  }
+
   return (
     <>
       <div className="hidden lg:flex sticky top-0 flex-col h-screen bg-theme text-primary w-72 border-r">

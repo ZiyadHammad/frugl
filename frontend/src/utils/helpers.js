@@ -12,9 +12,8 @@ const useSignOut = () => {
   const handleSignOut = async () => {
     try {
       await logout().unwrap();
-      // dispatch(clearProducts());
-      dispatch(clearCredentials());
       navigate('/');
+      dispatch(clearCredentials());
     } catch (err) {
       console.error(err);
     }

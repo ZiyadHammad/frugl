@@ -7,6 +7,7 @@ import {
   DialogTitle,
   Input,
 } from "@headlessui/react";
+import {useNavigate} from 'react-router-dom'
 import clsx from "clsx";
 import { useDeleteUserMutation } from "../slices/usersApiSlice";
 import { clearCredentials } from "../slices/authSlice";
@@ -14,11 +15,12 @@ import { useSelector, useDispatch } from "react-redux";
 
 const DeleteModal = ({ isOpen, setIsOpen }) => {
   const { userInfo } = useSelector(state => state.auth)
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [deleteUser] = useDeleteUserMutation();
   const [inputValue, setInputValue] = useState("");
   const isDeleteTyped = inputValue === "delete";
-  console.log({ _id: userInfo.id })
+
   
   const handleDeleteUser = async () => {
     if (!isDeleteTyped) {
