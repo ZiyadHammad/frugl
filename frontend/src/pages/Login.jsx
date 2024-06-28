@@ -29,7 +29,6 @@ const Login = () => {
 
     try {
       const response = await login(formData).unwrap();
-      console.log(response)
       dispatch(setCredentials({...response}));
       navigate("/dashboard");
     } catch (err) {

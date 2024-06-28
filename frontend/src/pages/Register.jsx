@@ -38,7 +38,6 @@ const Register = () => {
     } else {
       try {
         const response = await register(formData).unwrap();
-        console.log(response)
         dispatch(setCredentials({...response}));
         navigate("/dashboard");
       } catch (error) {

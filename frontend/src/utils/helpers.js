@@ -14,6 +14,7 @@ const useSignOut = () => {
       await logout().unwrap();
       navigate('/');
       dispatch(clearCredentials());
+      dispatch(clearProducts())
     } catch (err) {
       console.error(err);
     }

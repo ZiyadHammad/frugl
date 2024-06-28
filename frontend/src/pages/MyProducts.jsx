@@ -15,17 +15,14 @@ const MyProducts = () => {
   useEffect(() => {
     const fetchProducts = async (userId) => {
       const response = await getProducts(userId).unwrap();
-
       dispatch(setProducts(response));
     };
     fetchProducts(userInfo.id);
   }, [getProducts, dispatch, userInfo._id]);
 
-  if (isLoading) {
+  if (isLoading || !userProducts) {
     return <Loader />;
   }
-
-  console.log(userProducts)
 
   return (
     <section className="flex flex-col gap-10 px-6 pt-10 lg:pt-0">

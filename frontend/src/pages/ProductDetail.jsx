@@ -10,8 +10,6 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const { userProducts } = useSelector((state) => state.products);
   const product = userProducts.find((p) => p._id === productId);
-  
-  console.log(product)
 
   if (!product) {
     return <Loader />;
@@ -19,13 +17,12 @@ const ProductDetail = () => {
 
   return (
     <div className="flex flex-col gap-16 pt-10 xl:pt-0 bg-theme">
-
+      
       <h2 className="text-primary text-[32px] font-semibold text-center xl:text-start lg:border-b">
         Details
       </h2>
 
       <div className="flex flex-col items-center justify-evenly gap-10 xl:items-start xl:flex-row xl:px-10">
-
         <div className="hidden xl:flex p-10 bg-white border border-[#CDDBFF] rounded-[17px]">
           <img
             src={product.image}
@@ -68,10 +65,8 @@ const ProductDetail = () => {
               </div>
 
               <DeleteProductModal />
-              
             </div>
           </div>
-
 
           <div className="xl:hidden mb-8 min-w-[350px] p-14 bg-white border border-[#CDDBFF] rounded-[17px] mx-auto">
             <img
@@ -109,7 +104,6 @@ const ProductDetail = () => {
                 </div>
 
                 <DeleteProductModal />
-
               </div>
             </div>
           </div>
