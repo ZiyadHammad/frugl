@@ -87,21 +87,19 @@ const Settings = () => {
   }
 
   return (
-    <>
-      <section className="bg-[#f2f2f2] h-[150px] border-b p-10">
-        <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
+    <div className="p-10 bg-theme h-full">
+      
+        <h2 className="text-primary text-[32px] font-semibold text-center md:text-start border-b">
           Account Settings
         </h2>
-      </section>
 
-      <div className="w-full bg-inherit p-10">
         <form
           onSubmit={handleUpdateUser}
-          className="space-y-8 max-w-[1000px] py-10 px-14 lg:px-6 flex flex-col items-center md:items-start "
+          className="space-y-8 max-w-[1000px] py-12 flex flex-col items-center md:items-start"
         >
           {/* Email Field */}
-          <div className="flex flex-col gap-8">
-            <h2>Your Email Address</h2>
+          <div className="flex flex-col gap-6">
+            <h1 className=" text-primary font-spaceGrotesk text-lg text-center md:text-start">Your email address.</h1>
             <div className="flex flex-col relative flex-grow">
               <input
                 name="email"
@@ -125,8 +123,8 @@ const Settings = () => {
           </div>
 
           {/* First & Last Name */}
-          <div className="flex flex-col gap-8">
-            <h2>What is your name?</h2>
+          <div className="flex flex-col gap-6">
+            <h2 className=" text-primary font-spaceGrotesk text-lg text-center md:text-start" >What is your name?</h2>
 
             <div className="flex flex-col gap-8 md:flex-row">
               <div className="flex flex-col relative">
@@ -175,10 +173,13 @@ const Settings = () => {
           </div>
 
           {/* CONFIRM CURRENT PASSWORD */}
-          <div className="flex flex-col gap-4 md:gap-8 pt-6">
-            <h1 className="">To update your password, please authenticate</h1>
-            <div className="flex flex-col md:flex-row gap-4 md:gap-8">
-              <div className="flex flex-col relative flex-grow">
+          <div className="flex flex-col gap-6 pt-6">
+          
+            <h1 className="text-primary font-spaceGrotesk text-center md:text-start text-lg">To update your password, please authenticate.</h1>
+          
+            <div className="flex flex-col items-center md:flex-row gap-4 md:gap-8">
+            
+              <div className="flex flex-col relative">
                 <input
                   id="currentPassword"
                   onChange={handleChange}
@@ -197,6 +198,7 @@ const Settings = () => {
                   Current Password
                 </label>
               </div>
+            
               <Authenticate
                 currentPassword={formData.currentPassword}
                 setIsPasswordConfirmed={setIsPasswordConfirmed}
@@ -205,7 +207,8 @@ const Settings = () => {
           </div>
 
           {/* Password & Confirm Password */}
-          <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+          
             <div className="flex flex-col relative flex-grow">
               <input
                 id="password"
@@ -250,7 +253,7 @@ const Settings = () => {
           </div>
 
           {/* Notifications */}
-          <div className="flex flex-row relative gap-2 items-center">
+          <div className="flex flex-row relative gap-4 items-center pt-4"> 
             <Checkbox
               checked={formData.notifications}
               onChange={() =>
@@ -271,7 +274,7 @@ const Settings = () => {
                 </>
               )}
             </Checkbox>
-            <label className="text-sm font-medium text-gray-700 cursor-pointer">
+            <label className="text-sm font-medium text-gray-700 cursor-pointer font-spaceGrotesk ">
               Receive notifications?
             </label>
           </div>
@@ -305,16 +308,16 @@ const Settings = () => {
           <h3 className="text-primary font-spaceGrotesk text-center md:text-start pt-10">
             If you would like to delete your account,{" "}
             <span
-              className="text-secondary font-bold cursor-pointer"
+              className="text-secondary font-bold cursor-pointer font-spaceGrotesk "
               onClick={openModal}
             >
               click here
             </span>
           </h3>
-        </form>
-      </div>
-      <DeleteModal isOpen={isOpen} setIsOpen={setIsOpen} />
-    </>
+          <DeleteModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      </form>
+      
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       to={`/products/${product._id}`}
-      className="max-w-[250px] flex-1 flex flex-col gap-4 shadow-lg rounded-md p-8 hover:scale-95 transition ease-out"
+      className="max-w-[250px] bg-white flex-1 flex flex-col gap-4 shadow-lg rounded-md p-8 hover:scale-95 transition ease-out"
     >
       <div className="flex-1 relative flex flex-col gap-5 p-4 rounded-md">
         <img

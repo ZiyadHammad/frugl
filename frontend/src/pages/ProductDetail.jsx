@@ -16,13 +16,14 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="flex flex-col gap-16 pt-10 xl:pt-0 bg-theme">
+    <div className="bg-theme flex flex-col p-10 h-full gap-10 xl:gap-16">
       
       <h2 className="text-primary text-[32px] font-semibold text-center xl:text-start lg:border-b">
         Details
       </h2>
 
-      <div className="flex flex-col items-center justify-evenly gap-10 xl:items-start xl:flex-row xl:px-10">
+      <div className="flex flex-col justify-evenly gap-10 xl:flex-row xl:px-10">
+        
         <div className="hidden xl:flex p-10 bg-white border border-[#CDDBFF] rounded-[17px]">
           <img
             src={product.image}
@@ -31,8 +32,10 @@ const ProductDetail = () => {
           />
         </div>
 
-        <div className="flex-1 flex flex-col px-14 xl:px-0 max-w-[700px] xl:max-w-[600px]">
-          <div className="flex justify-between items-start gap-5 flex-wrap pb-6">
+        <div className="flex-1 flex flex-col items-center md:items-start xl:px-0 max-w-[700px] xl:max-w-[600px]">
+
+          <div className="flex flex-col justify-between items-start gap-5 flex-wrap pb-6">
+
             <div className="flex flex-col gap-3">
               <p className="text-[22px] text-secondary font-semibold">
                 {product.title}
@@ -66,18 +69,22 @@ const ProductDetail = () => {
 
               <DeleteProductModal />
             </div>
+
           </div>
 
-          <div className="xl:hidden mb-8 min-w-[350px] p-14 bg-white border border-[#CDDBFF] rounded-[17px] mx-auto">
+          <div className="xl:hidden mb-8 max-w-[350px]  p-8 bg-white border border-[#CDDBFF] rounded-[17px]">
+
             <img
               src={product.image}
               alt={product.title}
               className="max-h-[300px] max-w-[300px] lg:max-w-[600px] lg:max-h-[600px] mx-auto"
             />
+
           </div>
 
           <div className="flex justify-between items-start gap-5 flex-wrap pb-6">
             <div className="flex flex-col gap-3">
+
               <Link
                 href={product.url}
                 target="_blank"
@@ -87,12 +94,15 @@ const ProductDetail = () => {
               </Link>
 
               <div className="flex items-center gap-3 xl:hidden">
+                
                 <div className="flex items-center gap-2 px-3 py-2 bg-[#FFF0F0] rounded-10">
+
                   <img src="/assets/icons/red-heart.svg" alt="heart" />
 
                   <p className="text-base font-semibold text-[#D46F77]">
                     {product.reviewsCount}
                   </p>
+
                 </div>
 
                 <div className="p-2 bg-[#EDF0F8] rounded-10">
@@ -169,8 +179,8 @@ const ProductDetail = () => {
           </div>
 
           <TrackProductModal />
+          </div>
         </div>
-      </div>
 
       <div className="flex flex-col gap-16 px-10">
         <div className="flex flex-col gap-5">
@@ -195,6 +205,7 @@ const ProductDetail = () => {
           </a>
         </button>
       </div>
+      
     </div>
   );
 };
