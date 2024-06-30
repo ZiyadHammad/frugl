@@ -32,7 +32,7 @@ const TrackProductModal = () => {
       <Button
         type="button"
         onClick={openModal}
-        className="py-4 px-4 bg-secondary hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold"
+        className="py-4 px-4 w-60 bg-secondary hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold"
       >
         Track
       </Button>
