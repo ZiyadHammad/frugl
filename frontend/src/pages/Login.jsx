@@ -29,7 +29,7 @@ const Login = () => {
 
     try {
       const response = await login(formData).unwrap();
-      dispatch(setCredentials({...response}));
+      dispatch(setCredentials({ ...response }));
       navigate("/dashboard");
     } catch (err) {
       toast(err.message)

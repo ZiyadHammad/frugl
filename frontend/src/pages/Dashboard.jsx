@@ -13,7 +13,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchProducts = async (userId) => {
       const response = await getProducts(userId).unwrap();
-      dispatch(setProducts(response));
+      dispatch(setProducts( [...response] ));
     };
     fetchProducts(userInfo.id);
   }, [getProducts, dispatch, userInfo.id]);

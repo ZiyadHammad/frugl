@@ -6,12 +6,13 @@ import ProductCard from "../components/ProductCard";
 const MyProducts = () => {
   const { userProducts } = useSelector((state) => state.products);
 
+
   if (!userProducts) {
     return <Loader />;
   }
 
   return (
-    <section className="bg-theme h-full w-full p-10">
+    <section className="bg-theme min-h-screen w-full p-10">
 
       <h2 className="text-primary text-[32px] font-semibold text-center md:text-start lg:border-b">
         My Products
