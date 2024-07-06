@@ -17,13 +17,11 @@ const ProductDetail = () => {
 
   return (
     <div className="bg-theme flex flex-col p-4 h-full gap-10 xl:gap-16">
-
       <h2 className="text-primary text-[32px] font-semibold text-center xl:text-start lg:border-b">
         Details
       </h2>
 
       <div className="w-full flex flex-col justify-evenly gap-10 xl:flex-row">
-
         {/* XL Product Image */}
         <div className="hidden xl:flex  bg-white border border-[#CDDBFF] rounded-[17px]">
           <img
@@ -33,10 +31,8 @@ const ProductDetail = () => {
           />
         </div>
 
-        
         <div className="flex flex-col">
           <div className="flex flex-col gap-5 flex-wrap items-center">
-
             <div className="flex flex-col gap-3 xl:w-full">
               <p className="text-[22px] text-secondary font-semibold">
                 {product.title}
@@ -51,7 +47,6 @@ const ProductDetail = () => {
               </a>
             </div>
 
-          
             <div className="hidden xl:flex items-center gap-4 w-full">
               <div className="flex items-center gap-2 p-3 py-2 bg-[#FFF0F0] rounded-10">
                 <img src="/assets/icons/red-heart.svg" alt="heart" />
@@ -179,7 +174,6 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Product Description */}
@@ -196,23 +190,17 @@ const ProductDetail = () => {
               </p>
             ))} */}
 
-          {product.description.split('\n')}
+            {product.description.split("\n")}
           </div>
         </div>
 
-        <button className="py-4 px-4 bg-secondary hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold w-fit mx-auto flex items-center justify-center gap-3 min-w-[200px]">
-          <img src="/assets/icons/bag.svg" alt="check" className="h-6 w-6" />
-
-          <a
-            href={product.url}
-            target="_blank"
-            className="text-base text-white"
-          >
+        <a href={product.url} target="_blank" className="text-base text-white">
+          <button className="py-4 px-4 bg-secondary hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold w-fit mx-auto flex items-center justify-center gap-3 min-w-[200px]">
+            <img src="/assets/icons/bag.svg" alt="check" className="h-6 w-6" />
             Buy Now
-          </a>
-        </button>
+          </button>
+        </a>
       </div>
-      
     </div>
   );
 };

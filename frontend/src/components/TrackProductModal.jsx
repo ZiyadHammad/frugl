@@ -8,21 +8,20 @@ import {
 } from "@headlessui/react";
 
 const TrackProductModal = () => {
-  const [email, setEmail] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTracked, setIsTracked] = useState(false);
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleToggleTrack = async () => {
     setIsSubmitting(true);
 
     // Simulate API call or any async operation
     setTimeout(() => {
       setIsSubmitting(false);
-      setEmail("");
+      setIsTracked(!isTracked); // Toggle tracking status
       closeModal();
     }, 2000);
   };
@@ -32,14 +31,13 @@ const TrackProductModal = () => {
       <Button
         type="button"
         onClick={openModal}
-        className="py-4 px-4 w-60 bg-secondary hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold"
+        className={`py-4 px-4 w-60 ${isTracked ? "bg-green-500" : "bg-secondary"} hover:bg-opacity-70 rounded-[30px] text-white text-lg font-semibold`}
       >
-        Track
+        {isTracked ? "Price Alerts Enabled" : "Add to Price Alerts"}
       </Button>
 
-      <Transition show={isOpen} >
+      <Transition show={isOpen}>
         <Dialog onClose={closeModal} className="fixed inset-0 z-10 overflow-y-auto bg-black bg-opacity-60">
-
           <div className="flex items-center justify-center min-h-screen">
             <div className="bg-white max-w-md w-full p-6 rounded-xl shadow-xl">
               <div className="flex justify-between">
@@ -57,45 +55,29 @@ const TrackProductModal = () => {
               </div>
 
               <DialogTitle className="text-secondary text-lg leading-[24px] font-semibold mt-4">
-                Stay updated with product pricing alerts directly to your email!
+                {isTracked ? "Disable Price Tracking" : "Confirm Price Tracking"}
               </DialogTitle>
 
               <Description className="text-sm text-gray-600 mt-2">
-                Never miss a great deal again when you sign up!
+                {isTracked ? "Do you want to disable price alerts for this product?" : "Do you want to enable price alerts for this product?"}
               </Description>
 
-              <form onSubmit={handleSubmit} className="flex flex-col mt-5">
-                <label
-                  htmlFor="email"
-                  className="text-sm font-medium text-gray-700"
-                >
-                  Email Address
-                </label>
-                <div className="px-5 py-3 mt-3 flex items-center gap-2 border border-gray-300 rounded-[27px]">
-                  <img
-                    src="/assets/icons/mail.svg"
-                    alt="mail"
-                    className="w-5 h-5"
-                  />
-
-                  <input
-                    required
-                    type="email"
-                    id="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    placeholder="Enter your email address"
-                    className="flex-1 pl-1 border-none text-gray-500 text-base focus:outline-none border border-gray-300 rounded-[27px] shadow-xs"
-                  />
-                </div>
-
+              <div className="flex justify-end mt-8">
                 <Button
-                  type="submit"
-                  className="px-5 py-3 text-white text-base font-semibold border border-secondary bg-secondary rounded-lg mt-8"
+                  type="button"
+                  onClick={closeModal}
+                  className="px-5 py-3 text-gray-700 font-semibold border border-gray-300 rounded-lg mr-4"
                 >
-                  {isSubmitting ? "Submitting" : "Track"}
+                  Cancel
                 </Button>
-              </form>
+                <Button
+                  type="button"
+                  onClick={handleToggleTrack}
+                  className="px-5 py-3 text-white text-base font-semibold border border-secondary bg-secondary rounded-lg"
+                >
+                  {isSubmitting ? "Submitting" : isTracked ? "Disable" : "Confirm"}
+                </Button>
+              </div>
             </div>
           </div>
         </Dialog>
