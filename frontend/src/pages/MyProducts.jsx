@@ -1,26 +1,13 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useGetProductsMutation } from "../slices/productsApiSlice";
-import { setProducts } from "../slices/productSlice";
+import { useSelector } from "react-redux";
 
 import Loader from "../components/Loader";
 import ProductCard from "../components/ProductCard";
 
 const MyProducts = () => {
-  const { userInfo } = useSelector((state) => state.auth);
   const { userProducts } = useSelector((state) => state.products);
-  const [getProducts, { isLoading }] = useGetProductsMutation();
-  const dispatch = useDispatch();
+  
 
-  useEffect(() => {
-    const fetchProducts = async (userId) => {
-      const response = await getProducts(userId).unwrap();
-      dispatch(setProducts(response));
-    };
-    fetchProducts(userInfo.id);
-  }, [getProducts, dispatch, userInfo._id]);
-
-  if (isLoading || !userProducts) {
+  if (!userProducts) {
     return <Loader />;
   }
 
