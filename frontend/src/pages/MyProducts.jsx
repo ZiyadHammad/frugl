@@ -5,7 +5,6 @@ import ProductCard from "../components/ProductCard";
 
 const MyProducts = () => {
   const { userProducts } = useSelector((state) => state.products);
-  
 
   if (!userProducts) {
     return <Loader />;
